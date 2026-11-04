@@ -1,158 +1,430 @@
-<html lang="pt-BR"><head><style>
-@font-face {
-  font-family: "Optimistic";
-  font-style: normal;
-  font-weight: 400 600;
-  font-display: swap;
-  src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Optimistic Mono";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
-}
-:where(html) {
-  font-family: "Optimistic", system-ui, sans-serif;
-}
-:where(code, pre, kbd, samp) {
-  font-family: "Optimistic Mono", ui-monospace, monospace;
-}
-</style>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>EconomiaJa</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,Arial}
-body{background:#f8fafc;color:#111}
-header{background:#fff;padding:16px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center}
-h1{font-size:22px}
-.tabs{display:flex;gap:8px;padding:12px;background:#fff;border-bottom:1px solid #e5e7eb}
-.tab{flex:1;padding:12px;border-radius:999px;border:1px solid #e5e7eb;background:#f3f4f6;font-weight:700}
-.tab.on{background:#111;color:#fff}
-.wrap{max-width:480px;margin:0 auto;padding:16px}
-.card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:16px;margin-bottom:12px}
-.inp{width:100%;padding:14px;border:1px solid #e5e7eb;border-radius:12px;margin-top:10px;font-size:16px}
-.btn{width:100%;padding:15px;background:#111;color:#fff;border:0;border-radius:12px;font-weight:800;margin-top:12px;font-size:16px}
-.btn2{background:#eef2ff;color:#111}
-.prev{width:100%;max-height:200px;object-fit:cover;border-radius:12px;margin-top:10px;display:none;border:1px solid #e5e7eb}
-.st{padding:12px;border-radius:12px;margin-top:10px;font-weight:700;font-size:13px}
-.st.g{background:#dcfce7;color:#166534}
-.st.y{background:#fef9c3;color:#854d0e}
-.st.r{background:#fee2e2;color:#991b1b}
-small{color:#64748b;font-size:12px}
-.big{font-size:24px;font-weight:800}
-.row{display:flex;justify-content:space-between;gap:8px}
-#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:10px 18px;border-radius:999px;display:none;font-size:13px;z-index:99}
-</style>
-</head>
-<body>
-<header><h1>EconomiaJá</h1><span style="font-size:11px;background:#111;color:#fff;padding:5px 10px;border-radius:999px">7 em 7 • Zerado</span></header>
-<div class="tabs"><button class="tab on" id="bLuz">💡 Luz</button><button class="tab" id="bAgua">💧 Água</button></div>
-<div class="wrap">
-<div class="card" id="cardBaseEmpty">
-<div id="baseInfo"><div style="text-align:center;padding:10px;color:#94a3b8"><b style="color:#111">Nenhuma conta cadastrada</b><br><small>Escaneie sua última conta para começar zerado</small></div></div>
-<div id="formBase" style="display: block;">
-<div style="font-weight:800;margin-bottom:4px">1. Escanear conta Neoenergia/COMPESA</div>
-<input type="file" accept="image/*" capture="environment" class="inp" id="fConta">
-<img id="prevConta" class="prev">
-<input id="leAnt" type="number" inputmode="decimal" placeholder="Leitura Anterior ex 12280" class="inp">
-<input id="leAtu" type="number" inputmode="decimal" placeholder="Leitura Atual ex 12447" class="inp">
-<input id="dtConta" type="date" class="inp">
-<button class="btn" id="btnSaveBase">Salvar base</button>
-<small>Foto já preenche automático • oficial 2026</small>
-</div>
-</div>
+<!DOCTYPE html><html style='font-size:17px'><head>  <meta charset=UTF-8>  <meta name='viewport' content='width=100%, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no'>  <title>index</title>  
+<link rel="stylesheet" href="/var/mobile/Containers/Data/Application/EDDFA3E9-5161-4093-ABEE-9FD64F0F6E34/Library/Application Support/MarkDownResources/Styles/GitHub.css"/>
+<link rel="stylesheet" href="/var/mobile/Containers/Data/Application/EDDFA3E9-5161-4093-ABEE-9FD64F0F6E34/Library/Application Support/MarkDownResources/Highlight/highlight-style/tomorrow.css"/>  
+<script src="/var/mobile/Containers/Data/Application/EDDFA3E9-5161-4093-ABEE-9FD64F0F6E34/Library/Application Support/MarkDownResources/Highlight/highlightjs/highlight.min.js"></script>
+<script src="/var/mobile/Containers/Data/Application/EDDFA3E9-5161-4093-ABEE-9FD64F0F6E34/Library/Application Support/MarkDownResources/Highlight/highlightjs/swift.min.js"></script>
+<script src="/var/mobile/Containers/Data/Application/EDDFA3E9-5161-4093-ABEE-9FD64F0F6E34/Library/Application Support/MarkDownResources/MathJax/tex-mml-chtml.js"></script>  <script>hljs.initHighlightingOnLoad();</script>  <script type='text/x-mathjax-config'>MathJax.Hub.Config({'showProcessingMessages': false, 'messageStyle': 'none'});</script></head><body>  <p><html lang="pt-BR"><head><style><br>
+@font-face {<br>
+  font-family: <q>Optimistic</q>;<br>
+  font-style: normal;<br>
+  font-weight: 400 600;<br>
+  font-display: swap;<br>
+  src: url(<q>/fonts/OptimisticAI<u>VF</u>Optimized.woff2</q>) format(<q>woff2</q>);<br>
+}<br>
+@font-face {<br>
+  font-family: <q>Optimistic Mono</q>;<br>
+  font-style: normal;<br>
+  font-weight: 400;<br>
+  font-display: swap;<br>
+  src: url(<q>/fonts/OptimisticMono<u>W</u>TextRegular.woff2</q>) format(<q>woff2</q>);<br>
+}<br>
+:where(html) {<br>
+  font-family: <q>Optimistic</q>, system-ui, sans-serif;<br>
+}<br>
+:where(code, pre, kbd, samp) {<br>
+  font-family: <q>Optimistic Mono</q>, ui-monospace, monospace;<br>
+}<br>
+</style><br>
+<meta charset="UTF-8"><br>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><br>
+<title>EconomiaJá - Preciso</title><br>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script><br>
+<style><br>
+<em>{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,Arial}<br>
+body{background:#f8fafc;color:#111}<br>
+header{background:#fff;padding:16px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}<br>
+h1{font-size:22px;font-weight:900;letter-spacing:-.5px}<br>
+.tabs{display:flex;gap:8px;padding:12px;background:#fff;border-bottom:1px solid #e5e7eb;position:sticky;top:57px;z-index:9}<br>
+.tab{flex:1;padding:12px;border-radius:999px;border:1px solid #e5e7eb;background:#f3f4f6;font-weight:800;cursor:pointer}<br>
+.tab.on{background:#111;color:#fff;border-color:#111}<br>
+.wrap{max-width:480px;margin:0 auto;padding:16px;padding-bottom:120px}<br>
+.card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:16px;margin-bottom:12px}<br>
+.inp{width:100%;padding:14px;border:2px solid #e5e7eb;border-radius:12px;margin-top:10px;font-size:16px;font-weight:700;background:#fff}<br>
+.inp:focus{border-color:#111;outline:none}<br>
+.inp.ok{border-color:#16a34a;background:#f0fdf4}<br>
+.btn{width:100%;padding:15px;background:#111;color:#fff;border:0;border-radius:12px;font-weight:800;margin-top:12px;font-size:16px;cursor:pointer}<br>
+.btn:disabled{opacity:.3}<br>
+.btn2{background:#eef2ff;color:#111}<br>
+.prev{width:100%;max-height:280px;object-fit:contain;border-radius:12px;margin-top:10px;display:none;border:1px solid #e5e7eb;background:#000}<br>
+.st{padding:12px;border-radius:12px;margin-top:10px;font-weight:700;font-size:13px;display:flex;align-items:center;gap:8px}<br>
+.st.g{background:#dcfce7;color:#166534}<br>
+.st.y{background:#fef9c3;color:#854d0e}<br>
+.st.r{background:#fee2e2;color:#991b1b}<br>
+small{color:#64748b;font-size:12px}<br>
+.big{font-size:26px;font-weight:900;letter-spacing:-1px}<br>
+.row{display:flex;justify-content:space-between;gap:8px;align-items:center}<br>
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:12px 18px;border-radius:999px;display:none;font-size:13px;z-index:99;max-width:90vw;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.3)}<br>
+.badge{font-size:10px;padding:5px 10px;border-radius:999px;font-weight:800;letter-spacing:.3px;text-transform:uppercase}<br>
+.ocr-bar{height:8px;background:#e5e7eb;border-radius:999px;overflow:hidden;margin-top:10px;display:none}<br>
+.ocr-fill{height:100%;background:#111;transition:width .3s;width:0%}<br>
+.mono{font-family:ui-monospace,monospace}<br>
+details{margin-top:10px;border:1px solid #e5e7eb;border-radius:10px;background:#f8fafc}<br>
+details summary{padding:10px 12px;font-size:11px;font-weight:800;cursor:pointer;list-style:none}<br>
+details pre{padding:0 12px 12px;font-size:10px;white-space:pre-wrap;word-break:break-word;color:#475569;max-height:180px;overflow:auto}<br>
+.lab{font-size:11px;font-weight:800;color:#64748b;letter-spacing:.5px;text-transform:uppercase;margin-top:12px;display:block}<br>
+.dot{width:8px;height:8px;border-radius:50%;background:currentColor;display:inline-block}<br>
+</style><br>
+</head><br>
+<body><br>
+<header><h1>EconomiaJá</h1><span id="ocrBadgeHeader" style="font-size:10px;background:#f59e0b;color:#fff;padding:5px 10px;border-radius:999px;font-weight:800">OCR carregando...</span></header><br>
+<div class="tabs"><button class="tab on" id="bLuz">💡 Luz</button><button class="tab" id="bAgua">💧 Água</button></div><br>
+<div class="wrap"><br>
+<div class="card" id="cardBase"><br>
+<div id="baseInfo"><div style="text-align:center;padding:14px;color:#94a3b8"><b style="color:#111">Nenhuma conta cadastrada em Luz</b><br><small>Escaneie sua última conta para começar zerado</small></div></div><br>
+<div id="formBase" style="display: block;"><br>
+<div style="font-weight:900;margin-bottom:2px;font-size:15px">1. Escanear conta Neoenergia / COMPESA</div><br>
+<small id="ocrStatusConta" style="display:block;margin:6px 0 8px;color:#111;font-weight:700">📡 OCR pronto? Aguardando foto</small><br>
+<div id="ocrBarConta" class="ocr-bar"><div id="ocrFillConta" class="ocr-fill"></div></div><br>
+<label style="display:block;margin-top:10px"><br>
+<div style="border:2px dashed #cbd5e1;border-radius:12px;padding:18px;text-align:center;background:#f8fafc"><br>
+<div style="font-size:22px">📸</div><br>
+<div style="font-weight:800;margin-top:4px">Toque para fotografar a conta</div><br>
+<small>Dica: foto reta, bem iluminada, sem sombra</small><br>
+</div><br>
+&lt;input type=<q>file</q> accept=&quot;image/</em><q>capture=</q>environment<q>id=</q>fConta<q>style=</q>display:none<q>&gt;<br>
+</label><br>
+&lt;img id=</q>prevConta<q>class=</q>prev<q>&gt;<br>
+&lt;div id=</q>badgeContaWrap<q>style=</q>margin-top:10px;display:none<q>&gt;&lt;span id=</q>badgeConta<q>class=</q>badge<q>&gt;</span></div><br>
+&lt;label class=</q>lab<q>&gt;Leitura Anterior &lt;span style=</q>text-transform:none;color:#94a3b8<q>&gt;(o que estava)</span></label><br>
+&lt;input id=</q>leAnt<q>type=</q>number<q>inputmode=</q>numeric<q>placeholder=</q>Ex 12280<q>class=</q>inp<q>&gt;<br>
+&lt;label class=</q>lab<q>&gt;Leitura Atual &lt;span style=</q>text-transform:none;color:#94a3b8<q>&gt;(o que está agora)</span></label><br>
+&lt;input id=</q>leAtu<q>type=</q>number<q>inputmode=</q>numeric<q>placeholder=</q>Ex 12447<q>class=</q>inp<q>&gt;<br>
+&lt;label class=</q>lab<q>&gt;Data da leitura</label><br>
+&lt;input id=</q>dtConta<q>type=</q>date<q>class=</q>inp<q>&gt;<br>
+&lt;details id=</q>detailsConta<q>style=</q>display:none<q>&gt;<summary>👁️ Ver texto que o OCR leu</summary>&lt;pre id=</q>rawConta<q>&gt;</pre></details><br>
+&lt;button class=</q>btn<q>id=</q>btnSaveBase<q>&gt;Salvar base e zerar</button><br>
+&lt;small style=</q>display:block;margin-top:8px;text-align:center&quot;&gt;Nunca usa nome do arquivo • 100% local • pré-processamento 1800px + threshold</small><br>
+</div><br>
+</div></p>
 
 <div class="card" id="cardProj" style="display:none">
-<div style="font-weight:800" id="projTitle">Projeção</div>
-<div id="projStatus" class="st y">Calculando</div>
-<div class="row" style="margin-top:10px">
-<div><small>Período</small><div id="pPeriodo" style="font-weight:700">-</div></div>
-<div><small>Média/dia</small><div id="pMedia" style="font-weight:700">-</div></div>
-<div><small>Projeção 30d</small><div id="pProj" style="font-weight:800">-</div></div>
+<div style="font-weight:900;font-size:14px" id="projTitle">PROJEÇÃO 30 DIAS</div>
+<div id="projStatus" class="st y"><span class="dot"></span><span id="projTxt">Calculando</span></div>
+<div class="row" style="margin-top:12px">
+<div><small>Período real</small><div id="pPeriodo" style="font-weight:800">-</div></div>
+<div><small>Média/dia</small><div id="pMedia" style="font-weight:800">-</div></div>
+<div style="text-align:right"><small>Projeção</small><div id="pProj" style="font-weight:900;font-size:18px">-</div></div>
 </div>
 </div>
 
 <div class="card" id="cardHoje" style="display:none">
-<div style="font-weight:800" id="hojeTitle">2. Fotografar medidor hoje</div>
-<input type="file" accept="image/*" capture="environment" class="inp" id="fHoje">
+<div style="font-weight:900;font-size:15px" id="hojeTitle">2. Fotografar medidor hoje</div>
+<small id="ocrStatusHoje" style="display:block;margin:6px 0 8px;color:#111;font-weight:700">OCR pronto para o relógio</small>
+<div id="ocrBarHoje" class="ocr-bar"><div id="ocrFillHoje" class="ocr-fill"></div></div>
+<label style="display:block;margin-top:8px">
+<div style="border:2px dashed #cbd5e1;border-radius:12px;padding:16px;text-align:center;background:#f8fafc">
+<div style="font-size:20px">🔢</div>
+<div style="font-weight:800;margin-top:4px">Foto do relógio agora</div>
+<small>Medidor digital • foque só nos números pretos</small>
+</div>
+<input type="file" accept="image/*" capture="environment" id="fHoje" style="display:none">
+</label>
 <img id="prevHoje" class="prev">
-<input id="leHoje" type="number" inputmode="decimal" placeholder="Leitura hoje (auto)" class="inp">
+<div id="badgeHojeWrap" style="margin-top:10px;display:none"><span id="badgeHoje" class="badge"></span></div>
+<label class="lab">Leitura hoje (auto)</label>
+<input id="leHoje" type="number" inputmode="decimal" placeholder="Auto" class="inp">
 <input id="dtHoje" type="date" class="inp">
-<button class="btn" id="btnSaveHoje">Salvar leitura</button>
-<small>Foto já salva automático • sem sininho</small>
+<details id="detailsHoje" style="display:none"><summary>👁️ Ver texto do relógio</summary><pre id="rawHoje"></pre></details>
+<button class="btn" id="btnSaveHoje">Salvar leitura de hoje</button>
 </div>
 
 <div class="card" id="cardTime" style="display:none">
-<div style="font-weight:800">Timeline 7 em 7 dias</div>
-<div id="timeList" style="margin-top:8px"></div>
+<div style="font-weight:900;font-size:13px;letter-spacing:.5px">HISTÓRICO 7 EM 7</div>
+<div id="timeList" style="margin-top:12px"></div>
 </div>
 
-<button class="btn btn2" id="btnClear" style="display:none">Limpar tudo e começar do zero</button>
-</div>
-<div id="toast"></div>
+<p><button class="btn btn2" id="btnClear" style="display:none">Limpar tudo e começar do zero</button><br>
+<div style="text-align:center;margin-top:20px;color:#94a3b8;font-size:10px" class="mono">ecoV15 • OCR Tesseract.js v5 por • canvas 1800px • threshold 140/120 • nunca usa file.name</div><br>
+</div><br>
+<div id="toast"></div></p>
+
 <script>
+// ---------- DB ----------
 let tab='luz';
-let DB=JSON.parse(localStorage.getItem('ecoV13')||'{"luz":{"base":null,"leits":[]},"agua":{"base":null,"leits":[]}}');
-function save(){localStorage.setItem('ecoV13',JSON.stringify(DB));}
-function toast(m){let t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',3000);}
+let DB=JSON.parse(localStorage.getItem('ecoV15')||localStorage.getItem('ecoV14')||localStorage.getItem('ecoV13')||'{"luz":{"base":null,"leits":[]},"agua":{"base":null,"leits":[]}}');
+function save(){localStorage.setItem('ecoV15',JSON.stringify(DB));}
+function toast(m){let t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',4000);}
 function calcLuz(k){return k*0.79886/0.6952+12;}
 function calcAgua(m){if(m<=10)return 61.77;if(m<=20)return 61.77+(m-10)*7.09;if(m<=30)return 61.77+10*7.09+(m-20)*8.42;if(m<=50)return 61.77+10*7.09+10*8.42+(m-30)*11.59;return 61.77+10*7.09+10*8.42+20*11.59+(m-50)*13.74;}
+
+// ---------- OCR worker ----------
+let worker=null;
+let workerReady=false;
+async function ensureWorker(onProgress){
+ if(worker) return worker;
+ if(typeof Tesseract==='undefined'){ throw new Error('Tesseract não carregou - verifique internet'); }
+ document.getElementById('ocrBadgeHeader').textContent='OCR baixando... 1ª vez 10MB';
+ document.getElementById('ocrBadgeHeader').style.background='#f59e0b';
+ try{
+  worker = await Tesseract.createWorker('por', 1, {
+    logger: m=>{
+      if(m.status==='recognizing text'){
+        let p=Math.round(m.progress*100);
+        onProgress&&onProgress(p);
+      } else {
+        // status de download
+        if(m.status) {
+          document.getElementById('ocrStatusConta').textContent = '⏳ '+m.status+' '+(m.progress?Math.round(m.progress*100)+'%':'');
+          document.getElementById('ocrStatusHoje').textContent = '⏳ '+m.status;
+        }
+      }
+    },
+    workerPath: 'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/worker.min.js',
+    langPath: 'https://tessdata.projectnaptha.com/4.0.0',
+    corePath: 'https://cdn.jsdelivr.net/npm/tesseract.js-core@5/dist/tesseract-core.wasm.js',
+    cacheMethod: 'write',
+    gzip: true
+  });
+  workerReady=true;
+  document.getElementById('ocrBadgeHeader').textContent='OCR ONLINE ✓';
+  document.getElementById('ocrBadgeHeader').style.background='#16a34a';
+  return worker;
+ } catch(e){
+  console.error(e);
+  document.getElementById('ocrBadgeHeader').textContent='OCR FALHOU - sem internet?';
+  document.getElementById('ocrBadgeHeader').style.background='#dc2626';
+  throw e;
+ }
+}
+
+// ---------- Pré-processamento ----------
+function loadImg(file){
+ return new Promise((res,rej)=>{
+  let url=URL.createObjectURL(file);
+  let img=new Image();
+  img.onload=()=>{ URL.revokeObjectURL(url); res(img); };
+  img.onerror=rej;
+  img.src=url;
+ });
+}
+async function preprocess(file, mode){
+ let img=await loadImg(file);
+ let canvas=document.createElement('canvas');
+ let ctx=canvas.getContext('2d',{willReadFrequently:true});
+ let targetW= mode==='conta'? 1800 : Math.min(Math.round(img.width*2.8), 2600);
+ let scale=targetW/img.width;
+ let targetH=Math.round(img.height*scale);
+ canvas.width=targetW; canvas.height=targetH;
+ ctx.drawImage(img,0,0,targetW,targetH);
+ let id=ctx.getImageData(0,0,targetW,targetH);
+ let d=id.data;
+ let contrast= mode==='conta'?1.9:2.0;
+ let bright=12;
+ for(let i=0;i<d.length;i+=4){
+   let gray=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];
+   gray=(gray-128)*contrast+128+bright;
+   gray=Math.max(0,Math.min(255,gray));
+   d[i]=d[i+1]=d[i+2]=gray;
+ }
+ // sharpen só medidor
+ if(mode==='medidor'){
+   let w=targetW,h=targetH;
+   let src=new Uint8ClampedArray(d);
+   let k=[0,-1,0,-1,5,-1,0,-1,0];
+   for(let y=1;y<h-1;y++){
+    for(let x=1;x<w-1;x++){
+      let idx=(y*w+x)*4;
+      let val=0, ki=0;
+      for(let ky=-1;ky<=1;ky++) for(let kx=-1;kx<=1;kx++){ let s=((y+ky)*w+(x+kx))*4; val+=src[s]*k[ki++]; }
+      val=Math.max(0,Math.min(255,val));
+      d[idx]=d[idx+1]=d[idx+2]=val;
+    }
+   }
+ }
+ let thr= mode==='conta'? 142 : 118;
+ for(let i=0;i<d.length;i+=4){ let v=d[i]>thr?255:0; d[i]=d[i+1]=d[i+2]=v; }
+ ctx.putImageData(id,0,0);
+ return canvas.toDataURL('image/png');
+}
+
+// ---------- Extração ----------
+function extractLuz(text){
+ let orig=text;
+ let lower=text.toLowerCase();
+ let cleaned=orig.replace(/([0-9])[oO]([0-9])/g,'$10$2').replace(/([0-9])[oO]\b/g,'$10').replace(/\b[oO]([0-9])/g,'0$1');
+ let find = (pats, srcs)=>{
+   for(let src of srcs) for(let re of pats){ let m=src.match(re); if(m&&m[1]){ let n=parseInt(m[1].replace(/\D/g,''),10); if(!isNaN(n)) return n; } }
+   return null;
+ };
+ let antPats=[/leitura\s*ant\.?[^0-9]{0,15}([0-9]{4,6})/i,/anterior[^0-9]{0,18}([0-9]{4,6})/i,/leit\s*ant[^0-9]{0,12}([0-9]{3,6})/i,/leitura\s*anterior[^0-9]{0,18}([0-9]{4,6})/i];
+ let atuPats=[/leitura\s*atu\.?[^0-9]{0,15}([0-9]{4,6})/i,/atual[^0-9]{0,18}([0-9]{4,6})/i,/leitura\s*atual[^0-9]{0,18}([0-9]{4,6})/i];
+ let consPats=[/consumo[^0-9]{0,12}([0-9]{2,4})\s*kwh/i,/consumo\s*faturado[^0-9]{0,12}([0-9]+)/i,/consumo[^0-9]{0,15}([0-9]{2,4})/i];
+ let srcs=[orig,cleaned,lower];
+ let ant=find(antPats,srcs);
+ let atu=find(atuPats,srcs);
+ let cons=find(consPats,srcs);
+ if(ant===null||atu===null){
+   for(let src of srcs){
+     let m=src.match(/leitura[^0-9]{0,35}([0-9]{4,5})\D{1,15}([0-9]{4,5})/i);
+     if(m){ let n1=parseInt(m[1]), n2=parseInt(m[2]); if(!isNaN(n1)&&!isNaN(n2)){ if(ant===null) ant=Math.min(n1,n2); if(atu===null) atu=Math.max(n1,n2); break; } }
+   }
+ }
+ let data=null;
+ let dates=[...orig.matchAll(/(\d{2}\/\d{2}\/\d{4})/g)].map(x=>x[1]);
+ if(dates.length){ data= dates.length>=2? dates[dates.length-2] : dates[0]; }
+ if(ant!==null&&atu!==null){
+   let diff=atu-ant;
+   if(diff>0&&diff<1500){ if(cons===null) cons=diff; else if(Math.abs(cons-diff)>12) cons=diff; }
+ }
+ else if(atu!==null&&cons!==null&&ant===null){ let c=atu-cons; if(c>0) ant=c; }
+ else if(ant!==null&&cons!==null&&atu===null){ atu=ant+cons; }
+ let conf='baixa'; if(ant!==null&&atu!==null) conf='alta'; else if(ant!==null||atu!==null) conf='media';
+ return {ant,atu,cons,data,conf};
+}
+function extractAgua(text){
+ let orig=text;
+ let cleaned=orig.replace(/([0-9])[oO]([0-9])/g,'$10$2');
+ let getF=(pats, srcs)=>{
+  for(let src of srcs) for(let re of pats){ let m=src.match(re); if(m&&m[1]){ let v=parseFloat(m[1].replace(',','.').replace(/[^\d.]/g,'')); if(!isNaN(v)) return v; } }
+  return null;
+ };
+ let srcs=[orig,cleaned,orig.toLowerCase()];
+ let ant=getF([/leitura\s*ant[^0-9]{0,14}([0-9]+[.,]?[0-9]*)/i,/anterior[^0-9]{0,18}([0-9]+[.,]?[0-9]*)/i],srcs);
+ let atu=getF([/leitura\s*atu[^0-9]{0,14}([0-9]+[.,]?[0-9]*)/i,/atual[^0-9]{0,18}([0-9]+[.,]?[0-9]*)/i],srcs);
+ let cons=null; let m=orig.match(/consumo[^0-9]{0,14}([0-9]+(?:[.,][0-9]+)?)/i); if(m){ cons=parseFloat(m[1].replace(',','.')); }
+ if(ant===null||atu===null){
+   for(let src of srcs){ let mm=src.match(/leitura[^0-9]{0,35}([0-9]{2,4}[.,]?[0-9]{0,2})\D{1,12}([0-9]{2,4}[.,]?[0-9]{0,2})/i); if(mm){ let n1=parseFloat(mm[1].replace(',','.')), n2=parseFloat(mm[2].replace(',','.')); if(!isNaN(n1)&&!isNaN(n2)){ if(ant===null) ant=Math.min(n1,n2); if(atu===null) atu=Math.max(n1,n2); break; } } }
+ }
+ let dates=[...orig.matchAll(/(\d{2}\/\d{2}\/\d{4})/g)].map(x=>x[1]); let data=dates.length? (dates.length>=2?dates[dates.length-2]:dates[0]) : null;
+ if(ant!==null&&atu!==null){ let d=atu-ant; if(d>0&&d<500){ if(cons===null) cons=Math.round(d); } }
+ let conf='baixa'; if(ant!==null&&atu!==null) conf='alta'; else if(ant!==null||atu!==null) conf='media';
+ return {ant: ant!==null?Math.round(ant):null, atu: atu!==null?Math.round(atu):null, cons: cons!==null?Math.round(cons):null, data, conf};
+}
+function extractMedidor(text, tab){
+ let nums=[...text.matchAll(/\b([0-9]{2,6}[.,]?[0-9]{0,3})\b/g)].map(m=>m[1]);
+ let vals=[];
+ for(let n of nums){
+  if(/^\d{4}$/.test(n)&&parseInt(n)>=1900&&parseInt(n)<=2100) continue;
+  let v=parseFloat(n.replace(',','.'));
+  if(isNaN(v)) continue;
+  if(tab==='luz'){ if(v>=1000&&v<=999999) vals.push(Math.round(v)); }
+  else { if(v>=0&&v<=99999) vals.push(v); }
+ }
+ if(!vals.length) return null;
+ vals.sort((a,b)=>b-a);
+ return vals[0];
+}
+
+// ---------- UI ----------
 document.getElementById('bLuz').onclick=()=>{tab='luz';document.getElementById('bLuz').classList.add('on');document.getElementById('bAgua').classList.remove('on');render();};
 document.getElementById('bAgua').onclick=()=>{tab='agua';document.getElementById('bAgua').classList.add('on');document.getElementById('bLuz').classList.remove('on');render();};
-document.getElementById('fConta').onchange=function(){
- let f=this.files[0]; if(!f)return;
- let img=document.getElementById('prevConta'); img.src=URL.createObjectURL(f); img.style.display='block';
- setTimeout(()=>{
-  let b=DB[tab].base; let auto;
-  let m=f.name.match(/\d{4,6}/);
-  if(m) auto=parseInt(m[0]);
-  else if(b) auto= tab==='luz'? b.leitura+Math.round((b.media||5.5)*7) : +(b.leitura+2.8).toFixed(1);
-  else auto= tab==='luz'?12447:87.5;
-  document.getElementById('leAnt').value=auto-167;
-  document.getElementById('leAtu').value=auto;
-  toast('Leitura automática: '+auto);
- },700);
-};
-document.getElementById('fHoje').onchange=function(){
- let f=this.files[0]; if(!f)return;
- let img=document.getElementById('prevHoje'); img.src=URL.createObjectURL(f); img.style.display='block';
- setTimeout(()=>{
-  let b=DB[tab].base; let auto;
-  let m=f.name.match(/\d{4,6}/);
-  if(m) auto=parseInt(m[0]);
-  else if(b) auto= tab==='luz'? b.leitura+Math.round((b.media||5.5)*7) : +(b.leitura+2.8).toFixed(1);
-  else auto= tab==='luz'?12485:90.2;
-  document.getElementById('leHoje').value=auto;
-  salvarHoje(auto);
- },700);
-};
+
+async function onContaFile(e){
+ let file=e.target.files[0]; if(!file) return;
+ let prev=document.getElementById('prevConta'); prev.src=URL.createObjectURL(file); prev.style.display='block';
+ let bar=document.getElementById('ocrBarConta'), fill=document.getElementById('ocrFillConta');
+ bar.style.display='block'; fill.style.width='5%';
+ document.getElementById('ocrStatusConta').textContent='🔧 Pré-processando (1800px + threshold 142)...';
+ document.getElementById('detailsConta').style.display='none';
+ try{
+  let pre=await preprocess(file,'conta');
+  fill.style.width='25%';
+  document.getElementById('ocrStatusConta').textContent='🧠 Lendo com OCR (por)...';
+  let w=await ensureWorker(p=>{ fill.style.width=(25+p*0.6)+'%'; });
+  await w.setParameters({tessedit_pageseg_mode:'6'});
+  let res=await w.recognize(pre);
+  let txt=res.data.text||'';
+  fill.style.width='90%';
+  document.getElementById('rawConta').textContent=txt;
+  document.getElementById('detailsConta').style.display='block';
+  let ext= tab==='luz'? extractLuz(txt) : extractAgua(txt);
+  document.getElementById('leAnt').value= ext.ant??'';
+  document.getElementById('leAtu').value= ext.atu??'';
+  if(ext.data){
+    // converte dd/mm/yyyy -> yyyy-mm-dd
+    let parts=ext.data.split('/'); if(parts.length===3){ document.getElementById('dtConta').value=`${parts[2]}-${parts[1].padStart(2,'0')}-${parts[0].padStart(2,'0')}`; }
+  }
+  let badgeWrap=document.getElementById('badgeContaWrap'), badge=document.getElementById('badgeConta');
+  badgeWrap.style.display='block';
+  if(ext.conf==='alta'){ badge.textContent='Leitura precisa ✓ '+ext.ant+' → '+ext.atu+' = '+(ext.cons|| (ext.atu-ext.ant))+(tab==='luz'?'kWh':'m³'); badge.style.background='#dcfce7'; badge.style.color='#166534'; document.getElementById('leAnt').classList.add('ok'); document.getElementById('leAtu').classList.add('ok'); toast('Leitura precisa: '+ext.atu); }
+  else if(ext.conf==='media'){ badge.textContent='Revise - só achei 1 campo'; badge.style.background='#fef9c3'; badge.style.color='#854d0e'; toast('Revise - leitura parcial'); }
+  else { badge.textContent='Não detectado - digite manualmente'; badge.style.background='#fee2e2'; badge.style.color='#991b1b'; toast('Não li - foto escura? Digite manual'); }
+  fill.style.width='100%';
+  document.getElementById('ocrStatusConta').textContent= ext.conf==='alta' ? '✅ Leitura concluída' : '⚠️ Leitura parcial - confira';
+  setTimeout(()=>{ bar.style.display='none'; fill.style.width='0%'; }, 1500);
+ }catch(err){
+  console.error(err);
+  bar.style.display='none';
+  document.getElementById('ocrStatusConta').textContent='❌ OCR falhou: '+(err.message||'sem internet')+' - digite manual';
+  toast('OCR offline - digite manualmente');
+ }
+}
+async function onHojeFile(e){
+ let file=e.target.files[0]; if(!file) return;
+ let prev=document.getElementById('prevHoje'); prev.src=URL.createObjectURL(file); prev.style.display='block';
+ let bar=document.getElementById('ocrBarHoje'), fill=document.getElementById('ocrFillHoje');
+ bar.style.display='block'; fill.style.width='5%';
+ document.getElementById('ocrStatusHoje').textContent='🔧 Pré-processando relógio (2.8x + sharpen + thr 118)...';
+ try{
+  let pre=await preprocess(file,'medidor');
+  fill.style.width='30%';
+  document.getElementById('ocrStatusHoje').textContent='🧠 Lendo dígitos...';
+  let w=await ensureWorker(p=>{ fill.style.width=(30+p*0.5)+'%'; });
+  await w.setParameters({tessedit_pageseg_mode:'7', tessedit_char_whitelist:'0123456789.,'});
+  let r1=await w.recognize(pre);
+  let txt=r1.data.text||'';
+  let leitura=extractMedidor(txt, tab);
+  if(leitura===null){
+    await w.setParameters({tessedit_pageseg_mode:'8'});
+    let r2=await w.recognize(pre);
+    txt+='\n'+(r2.data.text||'');
+    leitura=extractMedidor(r2.data.text||'', tab) || extractMedidor(txt, tab);
+  }
+  document.getElementById('rawHoje').textContent=txt;
+  document.getElementById('detailsHoje').style.display='block';
+  let badgeWrap=document.getElementById('badgeHojeWrap'), badge=document.getElementById('badgeHoje');
+  badgeWrap.style.display='block';
+  if(leitura!==null){
+    document.getElementById('leHoje').value=leitura;
+    badge.textContent='Leitura precisa ✓ '+leitura; badge.style.background='#dcfce7'; badge.style.color='#166534';
+    document.getElementById('leHoje').classList.add('ok');
+    toast('Medidor lido: '+leitura);
+    document.getElementById('ocrStatusHoje').textContent='✅ Medidor lido ✓';
+  } else {
+    badge.textContent='Não detectado - digite'; badge.style.background='#fee2e2'; badge.style.color='#991b1b';
+    document.getElementById('ocrStatusHoje').textContent='⚠️ Não detectei - digite manual';
+    toast('Não li o relógio - digite');
+  }
+  fill.style.width='100%';
+  setTimeout(()=>{ bar.style.display='none'; fill.style.width='0%'; }, 1200);
+ }catch(err){
+  console.error(err);
+  bar.style.display='none';
+  document.getElementById('ocrStatusHoje').textContent='❌ Falha - digite manual';
+  toast('Erro medidor - digite manual');
+ }
+}
+document.getElementById('fConta').addEventListener('change', onContaFile);
+document.getElementById('fHoje').addEventListener('change', onHojeFile);
+// clique no card abre file
+document.querySelector('label:has(#fConta) div').onclick=()=>document.getElementById('fConta').click();
+document.querySelector('label:has(#fHoje) div').onclick=()=>document.getElementById('fHoje').click();
+
 document.getElementById('btnSaveBase').onclick=()=>{
  let ant=parseFloat(document.getElementById('leAnt').value);
  let atu=parseFloat(document.getElementById('leAtu').value);
  let dt=document.getElementById('dtConta').value || new Date().toISOString().slice(0,10);
- if(isNaN(ant)||isNaN(atu)){toast('Digite leituras');return;}
+ if(isNaN(ant)||isNaN(atu)){ toast('Digite as duas leituras'); return; }
  let cons=+(atu-ant).toFixed(2);
+ if(cons<=0||cons>1500){ toast('Consumo inválido'); return; }
  let med=+(cons/30).toFixed(2);
  DB[tab].base={leitura:atu,ant:ant,cons:cons,media:med,data:dt};
- save(); render(); toast('Base salva');
+ save(); render(); toast('Base salva ✓ Zerado!');
 };
-function salvarHoje(vManual){
- let v=vManual!==undefined?vManual:parseFloat(document.getElementById('leHoje').value);
- if(isNaN(v)){toast('Digite leitura');return;}
+function salvarHoje(){
+ let v=parseFloat(document.getElementById('leHoje').value);
+ if(isNaN(v)){ toast('Digite leitura'); return; }
  let dt=document.getElementById('dtHoje').value || new Date().toISOString().slice(0,10);
- let b=DB[tab].base; if(!b){toast('Cadastre base primeiro');return;}
+ let b=DB[tab].base; if(!b){ toast('Cadastre base primeiro'); return; }
  let dias=Math.max(1,Math.round((new Date(dt)-new Date(b.data))/(1000*60*60*24)));
  let per=+(v-b.leitura).toFixed(2);
  let med=+(per/dias).toFixed(2);
  let proj=+(med*30).toFixed(1);
- DB[tab].leits.push({data:dt,dias:dias,per:per,med:med,proj:proj,leitura:v});
+ DB[tab].leits.push({data:dt,per:per,dias:dias,med:med,proj:proj,leitura:v});
  save(); render(); toast('Projeção '+proj);
 }
 document.getElementById('btnSaveHoje').onclick=()=>salvarHoje();
-document.getElementById('btnClear').onclick=()=>{if(confirm('Limpar?')){DB[tab]={base:null,leits:[]};save();render();}};
+document.getElementById('btnClear').onclick=()=>{ if(confirm('Limpar tudo desse tipo?')){ DB[tab]={base:null,leits:[]}; save(); render(); }};
 
 function render(){
  let st=DB[tab];
@@ -168,7 +440,7 @@ function render(){
  hojeTitle.textContent='2. Fotografar '+(tab==='luz'?'medidor':'hidrômetro')+' hoje';
  document.getElementById('dtHoje').value=new Date().toISOString().slice(0,10);
  if(!st.base){
-  baseInfo.innerHTML='<div style="text-align:center;padding:10px;color:#94a3b8"><b style="color:#111">Nenhuma conta cadastrada</b><br><small>Escaneie sua última conta para começar zerado</small></div>';
+  baseInfo.innerHTML='<div style="text-align:center;padding:14px;color:#94a3b8"><b style="color:#111">Nenhuma conta cadastrada em '+(tab==='luz'?'Luz':'Água')+'</b><br><small>Escaneie sua última conta para começar zerado</small></div>';
   formBase.style.display='block';
   cardProj.style.display='none';
   cardHoje.style.display='none';
@@ -177,7 +449,7 @@ function render(){
   return;
  }
  formBase.style.display='none';
- baseInfo.innerHTML='<small>BASE • '+st.base.data+'</small><div class="row" style="align-items:center;margin-top:4px"><div><div class="big">'+st.base.cons+' '+(tab==='luz'?'kWh':'m³')+'</div><small>'+st.base.media+'/dia • R$ '+(tab==='luz'?calcLuz(st.base.cons):calcAgua(st.base.cons)).toFixed(2)+'</small></div><div style="text-align:right"><small>Leitura</small><div style="font-weight:800;font-size:18px">'+st.base.leitura+'</div></div></div>';
+ baseInfo.innerHTML='<small style="font-weight:800;letter-spacing:.5px">BASE • '+st.base.data+'</small><div class="row" style="margin-top:6px"><div><div class="big">'+st.base.cons+' '+(tab==='luz'?'kWh':'m³')+'</div><small>'+st.base.media+'/dia • R$ '+(tab==='luz'?calcLuz(st.base.cons):calcAgua(st.base.cons)).toFixed(2)+'</small></div><div style="text-align:right"><small>Leitura</small><div style="font-weight:900;font-size:20px">'+st.base.leitura+'</div></div></div>';
  cardHoje.style.display='block';
  btnClear.style.display='block';
  let ult=st.leits[st.leits.length-1];
@@ -190,18 +462,18 @@ function render(){
   if(diff<-st.base.cons*0.1){cor='g'; txt='Indo bem! Economizar '+Math.abs(diff).toFixed(1)+' • R$ '+Math.abs(custoProj-custoBase).toFixed(2);}
   else if(diff>st.base.cons*0.1){cor='r'; txt='Alerta! +R$ '+(custoProj-custoBase).toFixed(2)+' a mais • média '+st.base.media+'→'+ult.med;}
   projStatus.className='st '+cor;
-  projStatus.textContent=txt;
+  document.getElementById('projTxt').textContent=txt;
   document.getElementById('pPeriodo').textContent=ult.per+' em '+ult.dias+'d';
   document.getElementById('pMedia').textContent=ult.med+'/dia';
-  document.getElementById('pProj').textContent=ult.proj;
+  document.getElementById('pProj').textContent=ult.proj+' '+(tab==='luz'?'kWh':'m³')+' • R$'+custoProj.toFixed(2);
  }else{
   cardProj.style.display='none';
  }
  if(st.leits.length){
   cardTime.style.display='block';
   let h='<div style="border-left:2px dashed #e5e7eb;margin-left:8px;padding-left:16px">';
-  h+='<div style="position:relative;margin-bottom:10px"><div style="position:absolute;left:-23px;top:4px;width:10px;height:10px;background:#111;border-radius:50%"></div><small>Dia 0 • '+st.base.data+'</small><div style="font-weight:700">'+st.base.cons+' • base '+st.base.media+'/dia</div></div>';
-  st.leits.forEach(l=>{h+='<div style="position:relative;margin-bottom:10px"><div style="position:absolute;left:-23px;top:4px;width:10px;height:10px;background:#111;border-radius:50%"></div><small>Dia '+l.dias+' • '+l.data+'</small><div style="font-weight:700">'+l.per+' em '+l.dias+'d = '+l.med+'/dia → proj '+l.proj+'</div></div>';});
+  h+='<div style="position:relative;margin-bottom:12px"><div style="position:absolute;left:-23px;top:4px;width:10px;height:10px;background:#111;border-radius:50%"></div><small>Dia 0 • '+st.base.data+'</small><div style="font-weight:800">'+st.base.cons+' • base '+st.base.media+'/dia</div></div>';
+  st.leits.forEach(l=>{h+='<div style="position:relative;margin-bottom:12px"><div style="position:absolute;left:-23px;top:4px;width:10px;height:10px;background:#111;border-radius:50%"></div><small>Dia '+l.dias+' • '+l.data+'</small><div style="font-weight:800">'+l.per+' em '+l.dias+'d = '+l.med+'/dia → proj '+l.proj+'</div></div>';});
   h+='</div>';
   timeList.innerHTML=h;
  }else{
@@ -209,7 +481,10 @@ function render(){
  }
 }
 render();
+// inicia worker em background pra já baixar
+setTimeout(()=>{ ensureWorker().catch(()=>{}); }, 800);
 </script>
 <script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script>
 
-</body></html>
+<p></body></html></p>
+<script>window.webkit.messageHandlers.TextLoaded.postMessage('TextLoaded')</script></body></html>
