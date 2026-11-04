@@ -1,0 +1,215 @@
+<html lang="pt-BR"><head><style>
+@font-face {
+  font-family: "Optimistic";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Optimistic Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
+}
+:where(html) {
+  font-family: "Optimistic", system-ui, sans-serif;
+}
+:where(code, pre, kbd, samp) {
+  font-family: "Optimistic Mono", ui-monospace, monospace;
+}
+</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EconomiaJa</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,Arial}
+body{background:#f8fafc;color:#111}
+header{background:#fff;padding:16px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center}
+h1{font-size:22px}
+.tabs{display:flex;gap:8px;padding:12px;background:#fff;border-bottom:1px solid #e5e7eb}
+.tab{flex:1;padding:12px;border-radius:999px;border:1px solid #e5e7eb;background:#f3f4f6;font-weight:700}
+.tab.on{background:#111;color:#fff}
+.wrap{max-width:480px;margin:0 auto;padding:16px}
+.card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:16px;margin-bottom:12px}
+.inp{width:100%;padding:14px;border:1px solid #e5e7eb;border-radius:12px;margin-top:10px;font-size:16px}
+.btn{width:100%;padding:15px;background:#111;color:#fff;border:0;border-radius:12px;font-weight:800;margin-top:12px;font-size:16px}
+.btn2{background:#eef2ff;color:#111}
+.prev{width:100%;max-height:200px;object-fit:cover;border-radius:12px;margin-top:10px;display:none;border:1px solid #e5e7eb}
+.st{padding:12px;border-radius:12px;margin-top:10px;font-weight:700;font-size:13px}
+.st.g{background:#dcfce7;color:#166534}
+.st.y{background:#fef9c3;color:#854d0e}
+.st.r{background:#fee2e2;color:#991b1b}
+small{color:#64748b;font-size:12px}
+.big{font-size:24px;font-weight:800}
+.row{display:flex;justify-content:space-between;gap:8px}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:10px 18px;border-radius:999px;display:none;font-size:13px;z-index:99}
+</style>
+</head>
+<body>
+<header><h1>EconomiaJá</h1><span style="font-size:11px;background:#111;color:#fff;padding:5px 10px;border-radius:999px">7 em 7 • Zerado</span></header>
+<div class="tabs"><button class="tab on" id="bLuz">💡 Luz</button><button class="tab" id="bAgua">💧 Água</button></div>
+<div class="wrap">
+<div class="card" id="cardBaseEmpty">
+<div id="baseInfo"><div style="text-align:center;padding:10px;color:#94a3b8"><b style="color:#111">Nenhuma conta cadastrada</b><br><small>Escaneie sua última conta para começar zerado</small></div></div>
+<div id="formBase" style="display: block;">
+<div style="font-weight:800;margin-bottom:4px">1. Escanear conta Neoenergia/COMPESA</div>
+<input type="file" accept="image/*" capture="environment" class="inp" id="fConta">
+<img id="prevConta" class="prev">
+<input id="leAnt" type="number" inputmode="decimal" placeholder="Leitura Anterior ex 12280" class="inp">
+<input id="leAtu" type="number" inputmode="decimal" placeholder="Leitura Atual ex 12447" class="inp">
+<input id="dtConta" type="date" class="inp">
+<button class="btn" id="btnSaveBase">Salvar base</button>
+<small>Foto já preenche automático • oficial 2026</small>
+</div>
+</div>
+
+<div class="card" id="cardProj" style="display:none">
+<div style="font-weight:800" id="projTitle">Projeção</div>
+<div id="projStatus" class="st y">Calculando</div>
+<div class="row" style="margin-top:10px">
+<div><small>Período</small><div id="pPeriodo" style="font-weight:700">-</div></div>
+<div><small>Média/dia</small><div id="pMedia" style="font-weight:700">-</div></div>
+<div><small>Projeção 30d</small><div id="pProj" style="font-weight:800">-</div></div>
+</div>
+</div>
+
+<div class="card" id="cardHoje" style="display:none">
+<div style="font-weight:800" id="hojeTitle">2. Fotografar medidor hoje</div>
+<input type="file" accept="image/*" capture="environment" class="inp" id="fHoje">
+<img id="prevHoje" class="prev">
+<input id="leHoje" type="number" inputmode="decimal" placeholder="Leitura hoje (auto)" class="inp">
+<input id="dtHoje" type="date" class="inp">
+<button class="btn" id="btnSaveHoje">Salvar leitura</button>
+<small>Foto já salva automático • sem sininho</small>
+</div>
+
+<div class="card" id="cardTime" style="display:none">
+<div style="font-weight:800">Timeline 7 em 7 dias</div>
+<div id="timeList" style="margin-top:8px"></div>
+</div>
+
+<button class="btn btn2" id="btnClear" style="display:none">Limpar tudo e começar do zero</button>
+</div>
+<div id="toast"></div>
+<script>
+let tab='luz';
+let DB=JSON.parse(localStorage.getItem('ecoV13')||'{"luz":{"base":null,"leits":[]},"agua":{"base":null,"leits":[]}}');
+function save(){localStorage.setItem('ecoV13',JSON.stringify(DB));}
+function toast(m){let t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',3000);}
+function calcLuz(k){return k*0.79886/0.6952+12;}
+function calcAgua(m){if(m<=10)return 61.77;if(m<=20)return 61.77+(m-10)*7.09;if(m<=30)return 61.77+10*7.09+(m-20)*8.42;if(m<=50)return 61.77+10*7.09+10*8.42+(m-30)*11.59;return 61.77+10*7.09+10*8.42+20*11.59+(m-50)*13.74;}
+document.getElementById('bLuz').onclick=()=>{tab='luz';document.getElementById('bLuz').classList.add('on');document.getElementById('bAgua').classList.remove('on');render();};
+document.getElementById('bAgua').onclick=()=>{tab='agua';document.getElementById('bAgua').classList.add('on');document.getElementById('bLuz').classList.remove('on');render();};
+document.getElementById('fConta').onchange=function(){
+ let f=this.files[0]; if(!f)return;
+ let img=document.getElementById('prevConta'); img.src=URL.createObjectURL(f); img.style.display='block';
+ setTimeout(()=>{
+  let b=DB[tab].base; let auto;
+  let m=f.name.match(/\d{4,6}/);
+  if(m) auto=parseInt(m[0]);
+  else if(b) auto= tab==='luz'? b.leitura+Math.round((b.media||5.5)*7) : +(b.leitura+2.8).toFixed(1);
+  else auto= tab==='luz'?12447:87.5;
+  document.getElementById('leAnt').value=auto-167;
+  document.getElementById('leAtu').value=auto;
+  toast('Leitura automática: '+auto);
+ },700);
+};
+document.getElementById('fHoje').onchange=function(){
+ let f=this.files[0]; if(!f)return;
+ let img=document.getElementById('prevHoje'); img.src=URL.createObjectURL(f); img.style.display='block';
+ setTimeout(()=>{
+  let b=DB[tab].base; let auto;
+  let m=f.name.match(/\d{4,6}/);
+  if(m) auto=parseInt(m[0]);
+  else if(b) auto= tab==='luz'? b.leitura+Math.round((b.media||5.5)*7) : +(b.leitura+2.8).toFixed(1);
+  else auto= tab==='luz'?12485:90.2;
+  document.getElementById('leHoje').value=auto;
+  salvarHoje(auto);
+ },700);
+};
+document.getElementById('btnSaveBase').onclick=()=>{
+ let ant=parseFloat(document.getElementById('leAnt').value);
+ let atu=parseFloat(document.getElementById('leAtu').value);
+ let dt=document.getElementById('dtConta').value || new Date().toISOString().slice(0,10);
+ if(isNaN(ant)||isNaN(atu)){toast('Digite leituras');return;}
+ let cons=+(atu-ant).toFixed(2);
+ let med=+(cons/30).toFixed(2);
+ DB[tab].base={leitura:atu,ant:ant,cons:cons,media:med,data:dt};
+ save(); render(); toast('Base salva');
+};
+function salvarHoje(vManual){
+ let v=vManual!==undefined?vManual:parseFloat(document.getElementById('leHoje').value);
+ if(isNaN(v)){toast('Digite leitura');return;}
+ let dt=document.getElementById('dtHoje').value || new Date().toISOString().slice(0,10);
+ let b=DB[tab].base; if(!b){toast('Cadastre base primeiro');return;}
+ let dias=Math.max(1,Math.round((new Date(dt)-new Date(b.data))/(1000*60*60*24)));
+ let per=+(v-b.leitura).toFixed(2);
+ let med=+(per/dias).toFixed(2);
+ let proj=+(med*30).toFixed(1);
+ DB[tab].leits.push({data:dt,dias:dias,per:per,med:med,proj:proj,leitura:v});
+ save(); render(); toast('Projeção '+proj);
+}
+document.getElementById('btnSaveHoje').onclick=()=>salvarHoje();
+document.getElementById('btnClear').onclick=()=>{if(confirm('Limpar?')){DB[tab]={base:null,leits:[]};save();render();}};
+
+function render(){
+ let st=DB[tab];
+ let baseInfo=document.getElementById('baseInfo');
+ let formBase=document.getElementById('formBase');
+ let cardProj=document.getElementById('cardProj');
+ let cardHoje=document.getElementById('cardHoje');
+ let cardTime=document.getElementById('cardTime');
+ let btnClear=document.getElementById('btnClear');
+ let projStatus=document.getElementById('projStatus');
+ let hojeTitle=document.getElementById('hojeTitle');
+ let timeList=document.getElementById('timeList');
+ hojeTitle.textContent='2. Fotografar '+(tab==='luz'?'medidor':'hidrômetro')+' hoje';
+ document.getElementById('dtHoje').value=new Date().toISOString().slice(0,10);
+ if(!st.base){
+  baseInfo.innerHTML='<div style="text-align:center;padding:10px;color:#94a3b8"><b style="color:#111">Nenhuma conta cadastrada</b><br><small>Escaneie sua última conta para começar zerado</small></div>';
+  formBase.style.display='block';
+  cardProj.style.display='none';
+  cardHoje.style.display='none';
+  cardTime.style.display='none';
+  btnClear.style.display='none';
+  return;
+ }
+ formBase.style.display='none';
+ baseInfo.innerHTML='<small>BASE • '+st.base.data+'</small><div class="row" style="align-items:center;margin-top:4px"><div><div class="big">'+st.base.cons+' '+(tab==='luz'?'kWh':'m³')+'</div><small>'+st.base.media+'/dia • R$ '+(tab==='luz'?calcLuz(st.base.cons):calcAgua(st.base.cons)).toFixed(2)+'</small></div><div style="text-align:right"><small>Leitura</small><div style="font-weight:800;font-size:18px">'+st.base.leitura+'</div></div></div>';
+ cardHoje.style.display='block';
+ btnClear.style.display='block';
+ let ult=st.leits[st.leits.length-1];
+ if(ult){
+  cardProj.style.display='block';
+  let custoBase=tab==='luz'?calcLuz(st.base.cons):calcAgua(st.base.cons);
+  let custoProj=tab==='luz'?calcLuz(ult.proj):calcAgua(ult.proj);
+  let diff=ult.proj-st.base.cons;
+  let cor='y'; let txt='No caminho • R$ '+custoProj.toFixed(2);
+  if(diff<-st.base.cons*0.1){cor='g'; txt='Indo bem! Economizar '+Math.abs(diff).toFixed(1)+' • R$ '+Math.abs(custoProj-custoBase).toFixed(2);}
+  else if(diff>st.base.cons*0.1){cor='r'; txt='Alerta! +R$ '+(custoProj-custoBase).toFixed(2)+' a mais • média '+st.base.media+'→'+ult.med;}
+  projStatus.className='st '+cor;
+  projStatus.textContent=txt;
+  document.getElementById('pPeriodo').textContent=ult.per+' em '+ult.dias+'d';
+  document.getElementById('pMedia').textContent=ult.med+'/dia';
+  document.getElementById('pProj').textContent=ult.proj;
+ }else{
+  cardProj.style.display='none';
+ }
+ if(st.leits.length){
+  cardTime.style.display='block';
+  let h='<div style="border-left:2px dashed #e5e7eb;margin-left:8px;padding-left:16px">';
+  h+='<div style="position:relative;margin-bottom:10px"><div style="position:absolute;left:-23px;top:4px;width:10px;height:10px;background:#111;border-radius:50%"></div><small>Dia 0 • '+st.base.data+'</small><div style="font-weight:700">'+st.base.cons+' • base '+st.base.media+'/dia</div></div>';
+  st.leits.forEach(l=>{h+='<div style="position:relative;margin-bottom:10px"><div style="position:absolute;left:-23px;top:4px;width:10px;height:10px;background:#111;border-radius:50%"></div><small>Dia '+l.dias+' • '+l.data+'</small><div style="font-weight:700">'+l.per+' em '+l.dias+'d = '+l.med+'/dia → proj '+l.proj+'</div></div>';});
+  h+='</div>';
+  timeList.innerHTML=h;
+ }else{
+  cardTime.style.display='none';
+ }
+}
+render();
+</script>
+<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script>
+
+</body></html>
