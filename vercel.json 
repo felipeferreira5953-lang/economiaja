@@ -1,9 +1,0 @@
-<!DOCTYPE html><html style='font-size:17px'><head>  <meta charset=UTF-8>  <meta name='viewport' content='width=100%, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no'>  <title>vercel</title>  
-<link rel="stylesheet" href="/var/mobile/Containers/Data/Application/EDDFA3E9-5161-4093-ABEE-9FD64F0F6E34/Library/Application Support/MarkDownResources/Styles/GitHub.css"/>
-<link rel="stylesheet" href="/var/mobile/Containers/Data/Application/EDDFA3E9-5161-4093-ABEE-9FD64F0F6E34/Library/Application Support/MarkDownResources/Highlight/highlight-style/tomorrow.css"/>  
-<script src="/var/mobile/Containers/Data/Application/EDDFA3E9-5161-4093-ABEE-9FD64F0F6E34/Library/Application Support/MarkDownResources/Highlight/highlightjs/highlight.min.js"></script>
-<script src="/var/mobile/Containers/Data/Application/EDDFA3E9-5161-4093-ABEE-9FD64F0F6E34/Library/Application Support/MarkDownResources/Highlight/highlightjs/swift.min.js"></script>
-<script src="/var/mobile/Containers/Data/Application/EDDFA3E9-5161-4093-ABEE-9FD64F0F6E34/Library/Application Support/MarkDownResources/MathJax/tex-mml-chtml.js"></script>  <script>hljs.initHighlightingOnLoad();</script>  <script type='text/x-mathjax-config'>MathJax.Hub.Config({'showProcessingMessages': false, 'messageStyle': 'none'});</script></head><body>  <p>{<br>
-  <q>cleanUrls</q>: true<br>
-}</p>
-<script>window.webkit.messageHandlers.TextLoaded.postMessage('TextLoaded')</script></body></html>
