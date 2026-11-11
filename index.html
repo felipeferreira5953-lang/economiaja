@@ -1,0 +1,287 @@
+<html lang="pt-BR"><head><style>
+@font-face {
+  font-family: "Optimistic";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Optimistic Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
+}
+:where(html) {
+  font-family: "Optimistic", system-ui, sans-serif;
+}
+:where(code, pre, kbd, samp) {
+  font-family: "Optimistic Mono", ui-monospace, monospace;
+}
+</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Central de Jogos da Live - Infinita</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial}
+body{background:#0a0a0a;color:#fff;min-height:100vh;overflow-x:hidden}
+.particles{position:fixed;inset:0;pointer-events:none;z-index:0}
+.particles span{position:absolute;width:6px;height:6px;border-radius:50%;background:#FE2C55;opacity:.35;animation:float 6s infinite}
+@keyframes float{0%{transform:translateY(100vh)}100%{transform:translateY(-20vh)}}
+header{position:sticky;top:0;z-index:10;background:rgba(10,10,10,.9);backdrop-filter:blur(10px);padding:14px 16px;border-bottom:1px solid #222}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;max-width:900px;margin:0 auto}
+.logo{font-size:22px;font-weight:900} .logo i{color:#FE2C55;font-style:normal}
+.logo small{display:block;font-size:11px;color:#aaa;font-weight:600;letter-spacing:.5px}
+.btn-som{background:#1a1a1a;border:1px solid #333;color:#fff;padding:8px 12px;border-radius:999px;font-weight:700;cursor:pointer}
+.wrap{max-width:900px;margin:0 auto;padding:16px;position:relative;z-index:1}
+.banner{background:linear-gradient(90deg,#FE2C55,#25F4EE);padding:14px;border-radius:16px;text-align:center;font-weight:900;margin-bottom:14px;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.02)}}
+.search{width:100%;padding:13px 16px;border-radius:999px;border:1px solid #333;background:#161616;color:#fff;font-size:15px;outline:none;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
+.card{background:#161616;border:1px solid #262626;border-radius:20px;padding:16px;cursor:pointer;transition:.2s;animation:enter .5s both}
+.card:hover{transform:translateY(-3px);border-color:#FE2C55;box-shadow:0 10px 30px rgba(254,44,85,.25)}
+@keyframes enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.card .ico{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:10px;animation:wiggle 3s infinite}
+@keyframes wiggle{0%,100%{transform:rotate(0)}50%{transform:rotate(-6deg)}}
+.card h3{font-size:17px;line-height:1.2} .card p{font-size:13px;color:#aaa;margin:6px 0 10px;line-height:1.4;min-height:36px}
+.badge{display:inline-block;font-size:11px;font-weight:800;padding:4px 8px;border-radius:999px;background:#25F4EE;color:#000}
+.badge2{background:#FE2C55;color:#fff;margin-left:4px}
+.jogar{color:#FE2C55;font-weight:900;font-size:14px}
+.view{display:none} .view.active{display:block}
+.back{background:#222;border:0;color:#fff;padding:10px 14px;border-radius:999px;font-weight:700;cursor:pointer;margin-bottom:12px}
+.game-box{background:#161616;border:1px solid #262626;border-radius:20px;padding:16px}
+.game-box h2{font-size:22px;margin-bottom:4px} .game-box .sub{color:#aaa;font-size:13px;margin-bottom:12px}
+.placar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.placar div{background:#0a0a0a;border:1px solid #333;padding:8px 10px;border-radius:12px;font-size:13px;font-weight:800}
+.timer-box{background:#0a0a0a;border:1px solid #333;border-radius:14px;padding:12px;margin-bottom:12px;text-align:center}
+.timer-num{font-size:42px;font-weight:900;line-height:1}
+.timer-num.pisca{animation:pisca .5s infinite;color:#ff3b30}
+@keyframes pisca{0%,100%{opacity:1}50%{opacity:.3}}
+.bar{height:8px;background:#222;border-radius:999px;overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;background:#25F4EE;transition:width 1s linear}
+.dicas{background:#0a0a0a;border:1px solid #333;border-radius:14px;padding:12px;margin-bottom:12px}
+.dicas b{font-size:12px;letter-spacing:1px;color:#25F4EE}
+.dicas div{padding:6px 0;border-bottom:1px dashed #222;font-size:15px} .dicas div:last-child{border:0}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt{background:#222;border:2px solid #333;border-radius:14px;padding:13px 10px;text-align:center;font-weight:800;cursor:pointer;font-size:14px}
+.opt:hover{border-color:#25F4EE}
+.opt.certo{background:#1f7a3a!important;border-color:#2ecc71;animation:pop .4s}
+.opt.errado{background:#7a1f1f!important;border-color:#ff3b30;animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes pop{0%{transform:scale(.9)}100%{transform:scale(1.05)}}
+.btn{width:100%;background:#FE2C55;border:0;color:#fff;padding:14px;border-radius:14px;font-weight:900;font-size:16px;cursor:pointer;margin-top:12px}
+.btn.ciano{background:#25F4EE;color:#000} .btn.escuro{background:#222}
+.btn.peq{width:auto;padding:8px 14px;font-size:13px;margin:6px 4px 0 0}
+.dif{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.dif button{flex:1;min-width:70px;padding:10px 6px;border-radius:12px;border:1px solid #333;background:#0a0a0a;color:#fff;font-weight:800;cursor:pointer}
+.dif button.ativo{background:#FE2C55;border-color:#FE2C55}
+input,textarea{width:100%;background:#0a0a0a;border:1px solid #333;color:#fff;padding:12px;border-radius:12px;margin:8px 0;font-size:15px}
+.mem-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.mem{aspect-ratio:1;background:#222;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:26px;cursor:pointer;border:1px solid #333}
+.mem.virada{background:#fff;color:#000}
+.caca-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.caca{aspect-ratio:1;background:#222;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer}
+.confete{position:fixed;top:-10px;font-size:22px;animation:cair 2s forwards;z-index:99;pointer-events:none}
+@keyframes cair{to{transform:translateY(110vh) rotate(360deg);opacity:0}}
+.nivel{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.7);z-index:100;font-size:32px;font-weight:900;text-align:center;animation:pop .5s}
+.chamas{text-align:center;background:#ff6b00;padding:8px;border-radius:12px;font-weight:900;margin-bottom:10px;animation:pulse 1s infinite}
+</style>
+</head>
+<body>
+<div class="particles" id="particles"><span style="left: 45.373052%; animation-delay: 0.747771s;"></span><span style="left: 38.751018%; animation-delay: 3.036283s;"></span><span style="left: 17.588865%; animation-delay: 3.196619s;"></span><span style="left: 52.312235%; animation-delay: 0.872025s;"></span><span style="left: 45.304625%; animation-delay: 3.987582s;"></span><span style="left: 4.857299%; animation-delay: 0.421365s;"></span><span style="left: 34.334168%; animation-delay: 1.404193s;"></span><span style="left: 71.722093%; animation-delay: 1.473778s;"></span><span style="left: 83.15324%; animation-delay: 2.250249s;"></span><span style="left: 89.581113%; animation-delay: 2.418348s;"></span><span style="left: 25.24106%; animation-delay: 0.29723s;"></span><span style="left: 35.968154%; animation-delay: 2.784495s;"></span></div>
+<header><div class="top"><div class="logo">⚡ CENTRAL <i>DA LIVE</i><small>MODO INFINITO ∞ • 11 JOGOS • V3</small></div><button class="btn-som" onclick="toggleSom()" id="btnSom">🔊 Som: Ligado</button></div></header>
+<div class="wrap">
+<div id="home" class="view active">
+<div class="banner">∞ AGORA COM MODO INFINITO - Nenhum jogo acaba mais!</div>
+<input class="search" id="busca" placeholder="🔍 Buscar jogo..." oninput="filtrar()">
+<div class="grid" id="grid"><div class="card" style="animation-delay:0s" onclick="abrir('jogador')"><div class="ico" style="background:#FE2C5522">⚽</div><span class="badge">∞ INFINITO</span> <span class="badge badge2">FUTEBOL</span><h3>Adivinhe o Jogador</h3><p>Dicas em texto, sem imagem. Fácil ao Lendário.</p><div class="jogar">Jogar agora ∞ →</div></div><div class="card" style="animation-delay:0.05s" onclick="abrir('clube')"><div class="ico" style="background:#25F4EE22">🏟️</div><span class="badge">∞ INFINITO</span> <span class="badge badge2">FUTEBOL</span><h3>Adivinhe o Clube</h3><p>Adivinhe o time pelas dicas. Infinito.</p><div class="jogar">Jogar agora ∞ →</div></div><div class="card" style="animation-delay:0.1s" onclick="abrir('bingo')"><div class="ico" style="background:#a55eea22">🎱</div><span class="badge">∞ INFINITO</span> <span class="badge badge2">SORTE</span><h3>Bingo da Live</h3><p>Cartela infinita, sorteio sem fim.</p><div class="jogar">Jogar agora ∞ →</div></div><div class="card" style="animation-delay:0.15000000000000002s" onclick="abrir('numero')"><div class="ico" style="background:#fed33022">🔢</div><span class="badge">∞ INFINITO</span> <span class="badge badge2">ADIVINHAÇÃO</span><h3>Adivinhe o Número</h3><p>Chute o número, faixa aumenta sem parar.</p><div class="jogar">Jogar agora ∞ →</div></div><div class="card" style="animation-delay:0.2s" onclick="abrir('memoria')"><div class="ico" style="background:#20bf6b22">🧠</div><span class="badge">∞ INFINITO</span> <span class="badge badge2">MEMÓRIA</span><h3>Jogo da Memória</h3><p>Ache os pares, níveis infinitos.</p><div class="jogar">Jogar agora ∞ →</div></div><div class="card" style="animation-delay:0.25s" onclick="abrir('verdade')"><div class="ico" style="background:#eb3b5a22">🎭</div><span class="badge">∞ INFINITO</span> <span class="badge badge2">DIVERSÃO</span><h3>Verdade ou Desafio</h3><p>Cartas infinitas para a live.</p><div class="jogar">Jogar agora ∞ →</div></div><div class="card" style="animation-delay:0.30000000000000004s" onclick="abrir('quem')"><div class="ico" style="background:#45aaf222">🕵️</div><span class="badge">∞ INFINITO</span> <span class="badge badge2">ADIVINHAÇÃO</span><h3>Quem Sou Eu</h3><p>Dicas para adivinhar o personagem.</p><div class="jogar">Jogar agora ∞ →</div></div><div class="card" style="animation-delay:0.35000000000000003s" onclick="abrir('stop')"><div class="ico" style="background:#26de8122">✏️</div><span class="badge">∞ INFINITO</span> <span class="badge badge2">PALAVRAS</span><h3>Stop da Live</h3><p>Letra sorteada, 60s, rodadas infinitas.</p><div class="jogar">Jogar agora ∞ →</div></div><div class="card" style="animation-delay:0.4s" onclick="abrir('ppt')"><div class="ico" style="background:#f7b73122">✂️</div><span class="badge">∞ INFINITO</span> <span class="badge badge2">BATALHA</span><h3>Pedra Papel Tesoura</h3><p>Você contra o chat, placar infinito.</p><div class="jogar">Jogar agora ∞ →</div></div><div class="card" style="animation-delay:0.45s" onclick="abrir('filme')"><div class="ico" style="background:#d6303122">🎬</div><span class="badge">∞ INFINITO</span> <span class="badge badge2">CINEMA</span><h3>Adivinhe o Filme pelo Emoji</h3><p>Filme pelos emojis, sem fim.</p><div class="jogar">Jogar agora ∞ →</div></div><div class="card" style="animation-delay:0.5s" onclick="abrir('caca')"><div class="ico" style="background:#e8439322">👀</div><span class="badge">∞ INFINITO</span> <span class="badge badge2">AGILIDADE</span><h3>Caça ao Emoji</h3><p>Ache o diferente, fases infinitas.</p><div class="jogar">Jogar agora ∞ →</div></div></div>
+<p style="text-align:center;color:#666;font-size:12px;margin-top:18px">Feito para live • Toque em um jogo para abrir • Todos infinitos</p>
+</div>
+<div id="gameView" class="view"><button class="back" onclick="voltar()">← Voltar para Jogos</button><div id="gameContent"></div></div>
+</div>
+<script>
+let somLigado=true, pontos=0, rodada=1, sequencia=0, nivel=1;
+let jogadores=[
+{q:"Neymar",pos:"Atacante",nac:"Brasil",clube:"Santos",num:"10",cur:"Rei do drible e do chapéu"},
+{q:"Messi",pos:"Atacante",nac:"Argentina",clube:"Inter Miami",num:"10",cur:"8 Bolas de Ouro"},
+{q:"Cristiano Ronaldo",pos:"Atacante",nac:"Portugal",clube:"Al-Nassr",num:"7",cur:"Maior artilheiro da história das seleções"},
+{q:"Pelé",pos:"Atacante",nac:"Brasil",clube:"Santos",num:"10",cur:"Único tricampeão do mundo"},
+{q:"Vinicius Jr",pos:"Atacante",nac:"Brasil",clube:"Real Madrid",num:"7",cur:"Revelado pelo Flamengo"},
+{q:"Mbappé",pos:"Atacante",nac:"França",clube:"Real Madrid",num:"9",cur:"Fez hat-trick em final de Copa"},
+{q:"Haaland",pos:"Atacante",nac:"Noruega",clube:"Man City",num:"9",cur:"Máquina de fazer gols"},
+{q:"Endrick",pos:"Atacante",nac:"Brasil",clube:"Real Madrid",num:"16",cur:"Joia do Palmeiras"},
+{q:"Gabigol",pos:"Atacante",nac:"Brasil",clube:"Cruzeiro",num:"9",cur:"Herói de duas Libertadores"},
+{q:"Ronaldinho",pos:"Meia",nac:"Brasil",clube:"Barcelona",num:"10",cur:"Sorriso e magia com a bola"},
+{q:"Neymar Jr",pos:"Atacante",nac:"Brasil",clube:"Santos",num:"10",cur:"Príncipe do futebol"},
+{q:"Kaká",pos:"Meia",nac:"Brasil",clube:"Milan",num:"22",cur:"Bola de Ouro 2007"},
+{q:"Ronaldo Fenômeno",pos:"Atacante",nac:"Brasil",clube:"Corinthians",num:"9",cur:"Fenômeno, 2 Copas do Mundo"},
+{q:"Romário",pos:"Atacante",nac:"Brasil",clube:"Vasco",num:"11",cur:"Baixinho artilheiro"},
+{q:"Zico",pos:"Meia",nac:"Brasil",clube:"Flamengo",num:"10",cur:"Galinho de Quintino"},
+{q:"Santos",pos:"Goleiro",nac:"Brasil",clube:"São Paulo",num:"01",cur:"Mito do Morumbi"},
+{q:"Casemiro",pos:"Volante",nac:"Brasil",clube:"Man United",num:"18",cur:"Cão de guarda do meio-campo"},
+{q:"Alisson",pos:"Goleiro",nac:"Brasil",clube:"Liverpool",num:"1",cur:"Goleiro da seleção"},
+{q:"Maradona",pos:"Meia",nac:"Argentina",clube:"Napoli",num:"10",cur:"Gol de mão e gol do século"},
+{q:"Bellingham",pos:"Meia",nac:"Inglaterra",clube:"Real Madrid",num:"5",cur:"Estrela inglesa"},
+{q:"Lamine Yamal",pos:"Atacante",nac:"Espanha",clube:"Barcelona",num:"19",cur:"Joia de 17 anos"},
+{q:"Salah",pos:"Atacante",nac:"Egito",clube:"Liverpool",num:"11",cur:"Rei do Egito"},
+{q:"De Bruyne",pos:"Meia",nac:"Bélgica",clube:"Man City",num:"17",cur:"Mago dos passes"},
+{q:"Vini Jr",pos:"Atacante",nac:"Brasil",clube:"Real Madrid",num:"7",cur:"Bola de Ouro da galera"},
+{q:"Hulk",pos:"Atacante",nac:"Brasil",clube:"Atlético-MG",num:"7",cur:"Chute mais forte do Brasil"},
+{q:"Suárez",pos:"Atacante",nac:"Uruguai",clube:"Grêmio",num:"9",cur:"Pistoleiro uruguaio"}
+];
+let clubes=[
+{q:"Flamengo",cid:"Rio de Janeiro",cores:"Vermelho e Preto",est:"Maracanã",apel:"Mengão"},
+{q:"Corinthians",cid:"São Paulo",cores:"Preto e Branco",est:"Neo Química Arena",apel:"Timão"},
+{q:"Palmeiras",cid:"São Paulo",cores:"Verde e Branco",est:"Allianz Parque",apel:"Verdão"},
+{q:"São Paulo",cid:"São Paulo",cores:"Vermelho, Preto e Branco",est:"Morumbis",apel:"Tricolor"},
+{q:"Santos",cid:"Santos",cores:"Preto e Branco",est:"Vila Belmiro",apel:"Peixe"},
+{q:"Grêmio",cid:"Porto Alegre",cores:"Azul, Preto e Branco",est:"Arena do Grêmio",apel:"Tricolor Gaúcho"},
+{q:"Internacional",cid:"Porto Alegre",cores:"Vermelho e Branco",est:"Beira-Rio",apel:"Colorado"},
+{q:"Atlético-MG",cid:"Belo Horizonte",cores:"Preto e Branco",est:"Arena MRV",apel:"Galo"},
+{q:"Cruzeiro",cid:"Belo Horizonte",cores:"Azul e Branco",est:"Mineirão",apel:"Raposa"},
+{q:"Botafogo",cid:"Rio de Janeiro",cores:"Preto e Branco",est:"Nilton Santos",apel:"Fogão"},
+{q:"Vasco",cid:"Rio de Janeiro",cores:"Preto e Branco",est:"São Januário",apel:"Gigante da Colina"},
+{q:"Fluminense",cid:"Rio de Janeiro",cores:"Grená e Verde",est:"Maracanã",apel:"Tricolor Carioca"},
+{q:"Bahia",cid:"Salvador",cores:"Azul, Vermelho e Branco",est:"Fonte Nova",apel:"Tricolor Baiano"},
+{q:"Sport",cid:"Recife",cores:"Vermelho e Preto",est:"Ilha do Retiro",apel:"Leão"},
+{q:"Ceará",cid:"Fortaleza",cores:"Preto e Branco",est:"Castelão",apel:"Vozão"},
+{q:"Fortaleza",cid:"Fortaleza",cores:"Azul, Vermelho e Branco",est:"Castelão",apel:"Leão do Pici"},
+{q:"Real Madrid",cid:"Madrid",cores:"Branco",est:"Santiago Bernabéu",apel:"Merengues"},
+{q:"Barcelona",cid:"Barcelona",cores:"Azul e Grená",est:"Camp Nou",apel:"Barça"},
+{q:"Manchester City",cid:"Manchester",cores:"Azul e Branco",est:"Etihad",apel:"Citizens"},
+{q:"PSG",cid:"Paris",cores:"Azul e Vermelho",est:"Parc des Princes",apel:"Paris"},
+{q:"Liverpool",cid:"Liverpool",cores:"Vermelho",est:"Anfield",apel:"Reds"},
+{q:"Chelsea",cid:"Londres",cores:"Azul",est:"Stamford Bridge",apel:"Blues"},
+{q:"Juventus",cid:"Turim",cores:"Preto e Branco",est:"Allianz Stadium",apel:"Juve"},
+{q:"Boca Juniors",cid:"Buenos Aires",cores:"Azul e Amarelo",est:"La Bombonera",apel:"Xeneize"}
+];
+let jogos=[
+{id:"jogador",titulo:"Adivinhe o Jogador",desc:"Dicas em texto, sem imagem. Fácil ao Lendário.",ico:"⚽",cor:"#FE2C55",cat:"FUTEBOL"},
+{id:"clube",titulo:"Adivinhe o Clube",desc:"Adivinhe o time pelas dicas. Infinito.",ico:"🏟️",cor:"#25F4EE",cat:"FUTEBOL"},
+{id:"bingo",titulo:"Bingo da Live",desc:"Cartela infinita, sorteio sem fim.",ico:"🎱",cor:"#a55eea",cat:"SORTE"},
+{id:"numero",titulo:"Adivinhe o Número",desc:"Chute o número, faixa aumenta sem parar.",ico:"🔢",cor:"#fed330",cat:"ADIVINHAÇÃO"},
+{id:"memoria",titulo:"Jogo da Memória",desc:"Ache os pares, níveis infinitos.",ico:"🧠",cor:"#20bf6b",cat:"MEMÓRIA"},
+{id:"verdade",titulo:"Verdade ou Desafio",desc:"Cartas infinitas para a live.",ico:"🎭",cor:"#eb3b5a",cat:"DIVERSÃO"},
+{id:"quem",titulo:"Quem Sou Eu",desc:"Dicas para adivinhar o personagem.",ico:"🕵️",cor:"#45aaf2",cat:"ADIVINHAÇÃO"},
+{id:"stop",titulo:"Stop da Live",desc:"Letra sorteada, 60s, rodadas infinitas.",ico:"✏️",cor:"#26de81",cat:"PALAVRAS"},
+{id:"ppt",titulo:"Pedra Papel Tesoura",desc:"Você contra o chat, placar infinito.",ico:"✂️",cor:"#f7b731",cat:"BATALHA"},
+{id:"filme",titulo:"Adivinhe o Filme pelo Emoji",desc:"Filme pelos emojis, sem fim.",ico:"🎬",cor:"#d63031",cat:"CINEMA"},
+{id:"caca",titulo:"Caça ao Emoji",desc:"Ache o diferente, fases infinitas.",ico:"👀",cor:"#e84393",cat:"AGILIDADE"}
+];
+let jogoAtual=null, dificuldade='Fácil', tempoTotal=30, tempoRest=30, timerId=null, timerAtivo=false, respostaCerta="", acertosNivel=0;
+
+function filtrar(){let t=document.getElementById('busca').value.toLowerCase();renderJogos(t)}
+function renderJogos(f=''){let g=document.getElementById('grid');g.innerHTML='';jogos.filter(j=>j.titulo.toLowerCase().includes(f)||j.desc.toLowerCase().includes(f)).forEach((j,i)=>{g.innerHTML+=`<div class="card" style="animation-delay:${i*0.05}s" onclick="abrir('${j.id}')"><div class="ico" style="background:${j.cor}22">${j.ico}</div><span class="badge">∞ INFINITO</span> <span class="badge badge2">${j.cat}</span><h3>${j.titulo}</h3><p>${j.desc}</p><div class="jogar">Jogar agora ∞ →</div></div>`})}
+function voltar(){document.getElementById('home').classList.add('active');document.getElementById('gameView').classList.remove('active');pararTimer();renderJogos()}
+function abrir(id){ try{ jogoAtual=id; document.getElementById('home').classList.remove('active'); document.getElementById('gameView').classList.add('active'); window.scrollTo(0,0); if(id==='jogador') renderFutebol('jogador'); else if(id==='clube') renderFutebol('clube'); else if(id==='bingo') renderBingo();else if(id==='numero') renderNumero();else if(id==='memoria') renderMemoria();else if(id==='verdade') renderVerdade();else if(id==='quem') renderQuem();else if(id==='stop') renderStop();else if(id==='ppt') renderPPT();else if(id==='filme') renderFilme();else if(id==='caca') renderCaca(); try{ playPop(); }catch(e){} }catch(e){ document.getElementById('gameContent').innerHTML='<div class="game-box"><h2>Erro ao abrir</h2><p>'+e.message+'</p><button class="btn" onclick="voltar()">Voltar</button></div>'; } }
+function placarHTML(){return `<div class="placar"><div>🎯 Rodada: ${rodada}</div><div>⭐ Pontos: ${pontos}</div><div>🔥 Sequência: ${sequencia}</div><div>🏆 Nível: ${nivel}</div></div>`}
+function difHTML(){return `<div style="font-size:12px;font-weight:800;margin-bottom:6px;color:#aaa">DIFICULDADE - DO MAIS FÁCIL AO MAIS DIFÍCIL</div><div class="dif"><button class="${dificuldade==='Fácil'?'ativo':''}" onclick="setDif('Fácil')">😊 Fácil<br><small>30s • 4 dicas</small></button><button class="${dificuldade==='Médio'?'ativo':''}" onclick="setDif('Médio')">😐 Médio<br><small>20s • 3 dicas</small></button><button class="${dificuldade==='Difícil'?'ativo':''}" onclick="setDif('Difícil')">😤 Difícil<br><small>15s • 2 dicas</small></button><button class="${dificuldade==='Lendário'?'ativo':''}" onclick="setDif('Lendário')">👑 Lendário<br><small>10s • 1 dica</small></button></div>`}
+function setDif(d){dificuldade=d;tempoTotal=d==='Fácil'?30:d==='Médio'?20:d==='Difícil'?15:10;pararTimer();if(jogoAtual==='jogador') renderFutebol('jogador');else renderFutebol('clube');playPop()}
+function renderFutebol(tipo){
+  let lista=tipo==='jogador'?jogadores:clubes;
+  let item=lista[Math.floor(Math.random()*lista.length)];
+  respostaCerta=item.q;
+  let dicas=[];
+  if(tipo==='jogador'){
+    if(dificuldade==='Fácil') dicas=[`Posição: ${item.pos}`,`Nacionalidade: ${item.nac}`,`Clube: ${item.clube}`,`Camisa: ${item.num} • ${item.cur}`];
+    if(dificuldade==='Médio') dicas=[`Posição: ${item.pos}`,`Nacionalidade: ${item.nac}`,`Clube: ${item.clube}`];
+    if(dificuldade==='Difícil') dicas=[`Posição: ${item.pos}`,`Nacionalidade: ${item.nac}`];
+    if(dificuldade==='Lendário') dicas=[`Curiosidade: ${item.cur}`];
+  } else {
+    if(dificuldade==='Fácil') dicas=[`Cidade: ${item.cid}`,`Cores: ${item.cores}`,`Estádio: ${item.est}`,`Apelido: ${item.apel}`];
+    if(dificuldade==='Médio') dicas=[`Cidade: ${item.cid}`,`Cores: ${item.cores}`,`Estádio: ${item.est}`];
+    if(dificuldade==='Difícil') dicas=[`Cidade: ${item.cid}`,`Cores: ${item.cores}`];
+    if(dificuldade==='Lendário') dicas=[`Apelido: ${item.apel}`];
+  }
+  tempoRest=tempoTotal; timerAtivo=false;
+  let ops=[item.q]; while(ops.length<4){let o=lista[Math.floor(Math.random()*lista.length)].q; if(!ops.includes(o)) ops.push(o)} ops.sort(()=>Math.random()-.5);
+  let dicasHTML=dicas.map(d=>`<div>• ${d}</div>`).join('');
+  document.getElementById('gameContent').innerHTML=`<div class="game-box"><h2>${tipo==='jogador'?'⚽ Adivinhe o Jogador':'🏟️ Adivinhe o Clube'}</h2><div class="sub">Só dicas em texto • Sem imagens • Infinito ∞</div>${placarHTML()}${difHTML()}<div class="timer-box"><div style="font-size:12px;color:#aaa;font-weight:800">CRONÔMETRO - PARADO ATÉ VOCÊ APERTAR</div><div class="timer-num" id="timerNum">${tempoRest}s</div><div class="bar"><i id="timerBar" style="width:100%"></i></div><button class="btn ciano" id="btnIniciar" onclick="iniciarTimer()">▶ INICIAR CRONÔMETRO</button><div><button class="btn peq escuro" onclick="pausarTimer()">⏸ Pausar</button><button class="btn peq escuro" onclick="reiniciarTimer()">↻ Reiniciar tempo</button></div></div><div class="dicas"><b>DICAS:</b>${dicasHTML}</div><div class="opts">${ops.map(o=>`<div class="opt" onclick="responder(this,'${o.replace(/'/g,"")}')">${o}</div>`).join('')}</div><div id="msg"></div></div>`;
+}
+function iniciarTimer(){if(timerAtivo) return; timerAtivo=true; document.getElementById('btnIniciar').textContent='⏳ CRONÔMETRO RODANDO...'; playApito(); timerId=setInterval(()=>{tempoRest--; let n=document.getElementById('timerNum'); if(n){n.textContent=tempoRest+'s'; document.getElementById('timerBar').style.width=(tempoRest/tempoTotal*100)+'%'; if(tempoRest<=5){n.classList.add('pisca'); playTick()} if(tempoRest<=0){clearInterval(timerId); playErro(); document.getElementById('msg').innerHTML=`<div style="background:#7a1f1f;padding:12px;border-radius:12px;margin-top:12px;text-align:center;font-weight:800">⏰ TEMPO ACABOU! Era: ${respostaCerta}</div><button class="btn" onclick="proxima()">PRÓXIMA RODADA ∞ →</button>`;}}},1000)}
+function pausarTimer(){clearInterval(timerId); timerAtivo=false; let b=document.getElementById('btnIniciar'); if(b) b.textContent='▶ CONTINUAR CRONÔMETRO'}
+function reiniciarTimer(){pararTimer(); tempoRest=tempoTotal; let n=document.getElementById('timerNum'); if(n){n.textContent=tempoRest+'s'; n.classList.remove('pisca'); document.getElementById('timerBar').style.width='100%'} let b=document.getElementById('btnIniciar'); if(b) b.textContent='▶ INICIAR CRONÔMETRO'}
+function pararTimer(){clearInterval(timerId); timerAtivo=false}
+function responder(el,escolha){pararTimer(); let certo=escolha===respostaCerta; document.querySelectorAll('.opt').forEach(o=>{o.style.pointerEvents='none'; if(o.textContent.trim()===respostaCerta) o.classList.add('certo')}); if(!certo) el.classList.add('errado'); if(certo){let pts=dificuldade==='Fácil'?10:dificuldade==='Médio'?20:dificuldade==='Difícil'?30:50; pontos+=pts; sequencia++; acertosNivel++; if(sequencia>=3) document.getElementById('msg').innerHTML='<div class="chamas">🔥 EM CHAMAS! 3+ SEGUIDOS!</div>'; if(acertosNivel>=5){nivel++; acertosNivel=0; playFanfarra(); setTimeout(()=>{let d=document.createElement('div'); d.className='nivel'; d.innerHTML='🎉 SUBIU DE NÍVEL!<br>Nível '+nivel; document.body.appendChild(d); setTimeout(()=>d.remove(),1800)},300)} else playCorreto(); confete(); document.getElementById('msg').innerHTML+=`<div style="background:#1f7a3a;padding:12px;border-radius:12px;margin-top:12px;text-align:center;font-weight:800">✅ ACERTOU! +${pts} pontos • Era: ${respostaCerta}</div>`} else {sequencia=0; playErro(); document.getElementById('msg').innerHTML=`<div style="background:#7a1f1f;padding:12px;border-radius:12px;margin-top:12px;text-align:center;font-weight:800">❌ ERROU! Era: ${respostaCerta}</div>`} rodada++; document.getElementById('msg').innerHTML+=`<button class="btn" onclick="proxima()">PRÓXIMA RODADA ∞ →</button>`}
+function proxima(){if(jogoAtual==='jogador') renderFutebol('jogador'); else renderFutebol('clube')}
+let bingoSorteados=[]; let bingoCartela=[];
+function letraBingo(n){ if(n<=15) return 'B'; if(n<=30) return 'I'; if(n<=45) return 'N'; if(n<=60) return 'G'; return 'O'; }
+function gerarCartela(){ var nums=[]; while(nums.length<24){ var n=Math.floor(Math.random()*75)+1; if(nums.indexOf(n)===-1) nums.push(n); } bingoCartela=nums; }
+function renderBingo(){
+  try{
+    if(bingoCartela.length===0) gerarCartela();
+    var ultima = bingoSorteados.length>0 ? bingoSorteados[bingoSorteados.length-1] : 0;
+    var ultimaTxt = ultima===0 ? '?' : letraBingo(ultima)+'-'+ultima;
+    var histHtml = '';
+    for(var i=bingoSorteados.length-1; i>=0 && i>bingoSorteados.length-13; i--){ var n=bingoSorteados[i]; histHtml += '<span style="display:inline-block;background:#222;border:1px solid #333;padding:6px 9px;border-radius:999px;margin:3px;font-size:13px;font-weight:800">'+letraBingo(n)+'-'+n+'</span>'; }
+    if(histHtml==='') histHtml = '<span style="color:#888;font-size:13px">Nenhuma bola ainda. Aperta SORTEAR BOLA!</span>';
+    var cartHtml = '';
+    var idx=0;
+    for(var r=0;r<5;r++){ for(var c=0;c<5;c++){ if(r===2 && c===2){ cartHtml += '<div style="background:#FE2C55;color:#fff;border-radius:10px;height:48px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px">⭐</div>'; continue; } var num=bingoCartela[idx++]; var marcado = bingoSorteados.indexOf(num)!==-1; if(marcado){ cartHtml += '<div style="background:#1f7a3a;border:1px solid #2ecc71;border-radius:10px;height:48px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:#fff">'+num+'</div>'; } else { cartHtml += '<div style="background:#222;border:1px solid #333;border-radius:10px;height:48px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px">'+num+'</div>'; } } }
+    var html = '';
+    html += '<div class="game-box"><h2>🎱 Bingo da Live - V3 CORRIGIDO</h2><div class="sub">Sorteio infinito • Se você está vendo V3, é o arquivo novo!</div>';
+    html += placarHTML();
+    html += '<div style="text-align:center;background:#0a0a0a;border:1px solid #333;border-radius:16px;padding:16px;margin-bottom:12px"><div style="font-size:12px;color:#aaa;font-weight:800">ÚLTIMA BOLA</div><div style="font-size:58px;font-weight:900;line-height:1.1">'+ultimaTxt+'</div><div style="font-size:13px;color:#aaa">'+bingoSorteados.length+' sorteadas • Faltam '+(75-bingoSorteados.length)+'</div></div>';
+    html += '<button class="btn" onclick="sortearBingo()">🎲 SORTEAR BOLA ∞</button>';
+    html += '<div style="margin-top:12px"><div style="font-size:12px;font-weight:800;color:#aaa;margin-bottom:6px">HISTÓRICO:</div>'+histHtml+'</div>';
+    html += '<div style="margin-top:14px"><div style="font-size:12px;font-weight:800;color:#aaa;margin-bottom:8px">SUA CARTELA:</div><div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px">'+cartHtml+'</div></div>';
+    html += '<div style="display:flex;gap:8px;margin-top:12px"><button class="btn ciano" style="flex:1" onclick="novaCartela()">🆕 Nova Cartela</button><button class="btn escuro" style="flex:1" onclick="zerarBingo()">↻ Zerar</button></div>';
+    html += '<button class="btn escuro" onclick="renderBingo()">🔄 Atualizar</button></div>';
+    document.getElementById('gameContent').innerHTML = html;
+  }catch(e){
+    document.getElementById('gameContent').innerHTML = '<div class="game-box"><h2>🎱 Bingo</h2><p>Erro: '+e.message+'</p><button class="btn" onclick="sortearBingoSimples()">🎲 SORTEAR BOLA SIMPLES</button><div id="saidaSimples" style="font-size:40px;text-align:center;padding:20px;font-weight:900">?</div></div>';
+  }
+}
+function sortearBingoSimples(){ var n=Math.floor(Math.random()*75)+1; document.getElementById('saidaSimples').textContent = letraBingo(n)+'-'+n; playCorreto(); }
+function sortearBingo(){
+  if(bingoSorteados.length>=75){ bingoSorteados=[]; }
+  var n=0; var tent=0;
+  do{ n=Math.floor(Math.random()*75)+1; tent++; }while(bingoSorteados.indexOf(n)!==-1 && tent<200);
+  if(bingoSorteados.indexOf(n)===-1) bingoSorteados.push(n);
+  rodada++; pontos+=5;
+  try{ playCorreto(); }catch(e){}
+  try{ confete(); }catch(e){}
+  renderBingo();
+}
+function novaCartela(){ gerarCartela(); try{ playPop(); }catch(e){} renderBingo(); }
+function zerarBingo(){ bingoSorteados=[]; try{ playPop(); }catch(e){} renderBingo(); }
+window.renderBingo = renderBingo; window.sortearBingo = sortearBingo; window.novaCartela = novaCartela; window.zerarBingo = zerarBingo;
+
+function renderNumero(){let num=Math.floor(Math.random()*100)+1; document.getElementById('gameContent').innerHTML=`<div class="game-box"><h2>🔢 Adivinhe o Número</h2><div class="sub">De 1 a 100 • Infinito, ao acertar já vem outro</div>${placarHTML()}<input id="chute" type="number" placeholder="Digite seu chute..."><button class="btn" onclick="chutar(${num})">CHUTAR</button><div id="msgNumero" style="text-align:center;margin-top:12px;font-weight:800"></div></div>`}
+function chutar(num){let v=parseInt(document.getElementById('chute').value); if(v===num){pontos+=20; playCorreto(); confete(); document.getElementById('msgNumero').innerHTML=`🎉 ACERTOU! Era ${num}! <br><button class="btn" onclick="renderNumero()">PRÓXIMO NÚMERO ∞</button>`} else {playErro(); document.getElementById('msgNumero').textContent=v<num?'⬆️ É MAIOR! Tenta de novo':'⬇️ É MENOR! Tenta de novo'}}
+let verdades=["Qual foi sua maior vergonha na live?","Já stalkou ex hoje?","Qual seu crush secreto?","Já fingiu que tava travando pra sair da live?","Qual foi a maior mentira que contou?"];
+let desafios=["Imite um jogador comemorando gol","Dance 10 segundos sem música","Fale com voz de narrador por 1 minuto","Faça 10 polichinelos ao vivo","Cante o hino do seu time"];
+function renderVerdade(){let t=verdades[Math.floor(Math.random()*verdades.length)]; let d=desafios[Math.floor(Math.random()*desafios.length)]; document.getElementById('gameContent').innerHTML=`<div class="game-box"><h2>🎭 Verdade ou Desafio</h2><div class="sub">Cartas infinitas</div>${placarHTML()}<div class="dicas"><b>VERDADE:</b><div>${t}</div></div><div class="dicas"><b>DESAFIO:</b><div>${d}</div></div><button class="btn" onclick="renderVerdade()">PRÓXIMA CARTA ∞</button></div>`; playPop()}
+let quemLista=[{p:"Pelé",d1:"Brasileiro",d2:"Tricampeão",d3:"Rei do futebol"},{p:"Neymar",d1:"Brasileiro",d2:"Camisa 10",d3:"Joga no Santos"},{p:"Messi",d1:"Argentino",d2:"8 Bolas de Ouro",d3:"Joga em Miami"}];
+function renderQuem(){let it=quemLista[Math.floor(Math.random()*quemLista.length)]; document.getElementById('gameContent').innerHTML=`<div class="game-box"><h2>🕵️ Quem Sou Eu</h2><div class="sub">Adivinhe pelo texto</div>${placarHTML()}<div class="dicas"><b>DICAS:</b><div>• ${it.d1}</div><div>• ${it.d2}</div><div>• ${it.d3}</div></div><div class="opts">${[it.p,"Cristiano","Mbappé","Vini Jr"].sort(()=>Math.random()-.5).map(o=>`<div class="opt" onclick="responderQuem(this,'${o}','${it.p}')">${o}</div>`).join('')}</div><div id="msg"></div></div>`}
+function responderQuem(el,esc,certo){if(esc===certo){pontos+=20; playCorreto(); confete(); document.getElementById('msg').innerHTML=`<div style="background:#1f7a3a;padding:12px;border-radius:12px;margin-top:10px;text-align:center">✅ ACERTOU! Era ${certo}</div><button class="btn" onclick="renderQuem()">PRÓXIMO ∞</button>`} else {playErro(); document.getElementById('msg').innerHTML=`<div style="background:#7a1f1f;padding:12px;border-radius:12px;margin-top:10px;text-align:center">❌ Era ${certo}</div><button class="btn" onclick="renderQuem()">PRÓXIMO ∞</button>`}}
+function renderStop(){let letras="ABCDEFGHIJKLMNOPRSTUV"; let l=letras[Math.floor(Math.random()*letras.length)]; document.getElementById('gameContent').innerHTML=`<div class="game-box"><h2>✏️ Stop da Live</h2><div class="sub">Rodadas infinitas</div>${placarHTML()}<div style="font-size:60px;text-align:center;font-weight:900">${l}</div><div class="dicas"><b>CATEGORIAS:</b><div>• Nome</div><div>• Cidade</div><div>• Comida</div><div>• Animal</div><div>• Time</div></div><button class="btn" onclick="renderStop()">SORTEAR NOVA LETRA ∞</button></div>`; playPop()}
+function renderPPT(){document.getElementById('gameContent').innerHTML=`<div class="game-box"><h2>✂️ Pedra Papel Tesoura</h2><div class="sub">Você x Chat • Infinito</div>${placarHTML()}<div style="text-align:center;font-size:40px;margin:12px 0">Escolha:</div><div class="opts"><div class="opt" onclick="jogarPPT('✊ Pedra')">✊ Pedra</div><div class="opt" onclick="jogarPPT('✋ Papel')">✋ Papel</div><div class="opt" onclick="jogarPPT('✌️ Tesoura')">✌️ Tesoura</div></div><div id="msgPPT" style="text-align:center;margin-top:12px;font-weight:800"></div></div>`}
+function jogarPPT(esc){let ops=["✊ Pedra","✋ Papel","✌️ Tesoura"]; let chat=ops[Math.floor(Math.random()*3)]; let res=esc===chat?"EMPATE!":(esc.includes("Pedra")&&chat.includes("Tesoura")||esc.includes("Papel")&&chat.includes("Pedra")||esc.includes("Tesoura")&&chat.includes("Papel"))?"VOCÊ VENCEU! 🎉":"CHAT VENCEU!"; if(res.includes("VENCEU")) pontos+=10; playPop(); document.getElementById('msgPPT').innerHTML=`Você: ${esc}<br>Chat: ${chat}<br><b>${res}</b><br><button class="btn" onclick="renderPPT()">JOGAR DE NOVO ∞</button>`}
+let filmes=[{e:"🦁👑",f:"Rei Leão"},{e:"🧊❄️👭",f:"Frozen"},{e:"🕷️🕸️",f:"Homem-Aranha"},{e:"🦖🦕",f:"Jurassic Park"}];
+function renderFilme(){let it=filmes[Math.floor(Math.random()*filmes.length)]; document.getElementById('gameContent').innerHTML=`<div class="game-box"><h2>🎬 Adivinhe o Filme</h2><div class="sub">Pelos emojis • Infinito</div>${placarHTML()}<div style="font-size:50px;text-align:center;margin:16px 0">${it.e}</div><div class="opts">${[it.f,"Avatar","Titanic","Shrek"].sort(()=>Math.random()-.5).map(o=>`<div class="opt" onclick="responderFilme(this,'${o}','${it.f}')">${o}</div>`).join('')}</div><div id="msg"></div></div>`}
+function responderFilme(el,esc,certo){if(esc===certo){pontos+=15; playCorreto(); confete(); document.getElementById('msg').innerHTML=`<div style="background:#1f7a3a;padding:12px;border-radius:12px;margin-top:10px;text-align:center">✅ ACERTOU!</div><button class="btn" onclick="renderFilme()">PRÓXIMO ∞</button>`} else {playErro(); document.getElementById('msg').innerHTML=`<div style="background:#7a1f1f;padding:12px;border-radius:12px;margin-top:10px;text-align:center">❌ Era ${certo}</div><button class="btn" onclick="renderFilme()">PRÓXIMO ∞</button>`}}
+function renderMemoria(){let emojis=["⚽","🏆","🎮","🎲","🎯","🔥","⭐","❤️"]; let bar=[...emojis,...emojis].sort(()=>Math.random()-.5); document.getElementById('gameContent').innerHTML=`<div class="game-box"><h2>🧠 Jogo da Memória</h2><div class="sub">Ache os pares • Infinito</div>${placarHTML()}<div class="mem-grid">${bar.map((e,i)=>`<div class="mem" data-e="${e}" onclick="virarMem(this)">?</div>`).join('')}</div><button class="btn" onclick="renderMemoria()">NOVO TABULEIRO ∞</button></div>`}
+let memAberto=[];
+function virarMem(el){if(el.classList.contains('virada')) return; el.classList.add('virada'); el.textContent=el.dataset.e; playPop(); memAberto.push(el); if(memAberto.length===2){setTimeout(()=>{if(memAberto[0].dataset.e!==memAberto[1].dataset.e){memAberto.forEach(m=>{m.classList.remove('virada'); m.textContent='?'})} else {pontos+=10; playCorreto()} memAberto=[]},600)}}
+function renderCaca(){let emojis=["😀","😀","😀","😀","😀","😀","😀","😀","😀","😀","😀","😃"]; let idx=Math.floor(Math.random()*12); document.getElementById('gameContent').innerHTML=`<div class="game-box"><h2>👀 Caça ao Emoji</h2><div class="sub">Ache o diferente • Infinito</div>${placarHTML()}<div class="caca-grid">${emojis.map((e,i)=>`<div class="caca" onclick="cacar(this,${i===idx})">${e}</div>`).join('')}</div><button class="btn" onclick="renderCaca()">PRÓXIMA FASE ∞</button></div>`}
+function cacar(el,certo){if(certo){pontos+=15; playCorreto(); confete(); el.style.background='#1f7a3a'} else {playErro(); el.style.background='#7a1f1f'}}
+function confete(){for(let i=0;i<18;i++){let s=document.createElement('div'); s.className='confete'; s.textContent=['🎉','⭐','🎊','💥'][Math.floor(Math.random()*4)]; s.style.left=Math.random()*100+'vw'; s.style.animationDelay=(Math.random()*0.5)+'s'; document.body.appendChild(s); setTimeout(()=>s.remove(),2500)}}
+let ctx=null;
+function audio(){if(!ctx) ctx=new (window.AudioContext||window.webkitAudioContext)(); return ctx}
+function tom(freq,dur,tipo='sine',vol=0.15){if(!somLigado) return; try{let a=audio(); let o=a.createOscillator(); let g=a.createGain(); o.connect(g); g.connect(a.destination); o.frequency.value=freq; o.type=tipo; g.gain.value=vol; o.start(); o.stop(a.currentTime+dur)}catch(e){}}
+function playPop(){tom(600,0.08,'sine')}
+function playCorreto(){tom(523,0.12); setTimeout(()=>tom(659,0.12),120); setTimeout(()=>tom(784,0.2),240)}
+function playErro(){tom(200,0.25,'sawtooth',0.12)}
+function playTick(){tom(1000,0.05)}
+function playApito(){tom(880,0.3,'square',0.1)}
+function playFanfarra(){tom(523,0.15); setTimeout(()=>tom(659,0.15),150); setTimeout(()=>tom(784,0.15),300); setTimeout(()=>tom(1046,0.4),450)}
+function toggleSom(){somLigado=!somLigado; document.getElementById('btnSom').textContent=somLigado?'🔊 Som: Ligado':'🔇 Som: Desligado'; if(somLigado) playPop()}
+for(let i=0;i<12;i++){let s=document.createElement('span'); s.style.left=Math.random()*100+'%'; s.style.animationDelay=(Math.random()*5)+'s'; document.getElementById('particles').appendChild(s)}
+renderJogos();
+</script>
+<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script>
+
+</body></html>
